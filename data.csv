@@ -1,288 +1,287 @@
-Australia,1,Lando Norris
-Australia,2,Max Verstappen
-Australia,3,George Russell
-Australia,4,Kimi Antonelli
-Australia,5,Alexander Albon
-Australia,6,Lance Stroll
-Australia,7,Nico Hulkenberg
-Australia,8,Charles Leclerc
-Australia,9,Oscar Piastri
-Australia,10,Lewis Hamilton
-China,1,Oscar Piastri
-China,2,Lando Norris
-China,3,George Russell
-China,4,Max Verstappen
-China,5,Esteban Ocon
-China,6,Kimi Antonelli
-China,7,Alexander Albon
-China,8,Oliver Bearman
-China,9,Lance Stroll
-China,10,Carlos Sainz
-China Sprint,1,Lewis Hamilton
-China Sprint,2,Oscar Piastri
-China Sprint,3,Max Verstappen
-China Sprint,4,George Russell
-China Sprint,5,Charles Leclerc
-China Sprint,6,Yuki Tsunoda
-China Sprint,7,Kimi Antonelli
-China Sprint,8,Lando Norris
-Japan,1,Max Verstappen
-Japan,2,Lando Norris
-Japan,3,Oscar Piastri
-Japan,4,Charles Leclerc
-Japan,5,George Russell
-Japan,6,Kimi Antonelli
-Japan,7,Lewis Hamilton
-Japan,8,Isack Hadjar
-Japan,9,Alexander Albon
-Japan,10,Oliver Bearman
-Bahrain,1,Oscar Piastri
-Bahrain,2,George Russell
-Bahrain,3,Lando Norris
-Bahrain,4,Charles Leclerc
-Bahrain,5,Lewis Hamilton
-Bahrain,6,Max Verstappen
-Bahrain,7,Pierre Gasly
-Bahrain,8,Esteban Ocon
-Bahrain,9,Yuki Tsunoda
-Bahrain,10,Oliver Bearman
-Saudi Arabia,1,Oscar Piastri
-Saudi Arabia,2,Max Verstappen
-Saudi Arabia,3,Charles Leclerc
-Saudi Arabia,4,Lando Norris
-Saudi Arabia,5,George Russell
-Saudi Arabia,6,Kimi Antonelli
-Saudi Arabia,7,Lewis Hamilton
-Saudi Arabia,8,Carlos Sainz
-Saudi Arabia,9,Alexander Albon
-Saudi Arabia,10,Isack Hadjar
-Miami Sprint,1,Lando Norris
-Miami Sprint,2,Oscar Piastri
-Miami Sprint,3,Lewis Hamilton
-Miami Sprint,4,George Russell
-Miami Sprint,5,Lance Stroll
-Miami Sprint,6,Yuki Tsunoda
-Miami Sprint,7,Kimi Antonelli
-Miami Sprint,8,Pierre Gasly
-Miami,1,Oscar Piastri
-Miami,2,Lando Norris
-Miami,3,George Russell
-Miami,4,Max Verstappen
-Miami,5,Alexander Albon
-Miami,6,Kimi Antonelli
-Miami,7,Charles Leclerc
-Miami,8,Lewis Hamilton
-Miami,9,Carlos Sainz
-Miami,10,Yuki Tsunoda
-Emilia Romagna,1,Max Verstappen
-Emilia Romagna,2,Lando Norris
-Emilia Romagna,3,Oscar Piastri
-Emilia Romagna,4,Lewis Hamilton
-Emilia Romagna,5,Alexander Albon
-Emilia Romagna,6,Charles Leclerc
-Emilia Romagna,7,George Russell
-Emilia Romagna,8,Carlos Sainz
-Emilia Romagna,9,Isack Hadjar
-Emilia Romagna,10,Yuki Tsunoda
-Monaco,1,Lando Norris
-Monaco,2,Charles Leclerc
-Monaco,3,Oscar Piastri
-Monaco,4,Max Verstappen
-Monaco,5,Lewis Hamilton
-Monaco,6,Isack Hadjar
-Monaco,7,Esteban Ocon
-Monaco,8,Liam Lawson
-Monaco,9,Alexander Albon
-Monaco,10,Carlos Sainz
-Spain,1,Oscar Piastri
-Spain,2,Lando Norris
-Spain,3,Charles Leclerc
-Spain,4,George Russell
-Spain,5,Nico Hulkenberg
-Spain,6,Lewis Hamilton
-Spain,7,Isack Hadjar
-Spain,8,Pierre Gasly
-Spain,9,Fernando Alonso
-Spain,10,Max Verstappen
-Canada,1,George Russell
-Canada,2,Max Verstappen
-Canada,3,Kimi Antonelli
-Canada,4,Oscar Piastri
-Canada,5,Charles Leclerc
-Canada,6,Lewis Hamilton
-Canada,7,Fernando Alonso
-Canada,8,Nico Hulkenberg
-Canada,9,Esteban Ocon
-Canada,10,Carlos Sainz
-Austria,1,Lando Norris
-Austria,2,Oscar Piastri
-Austria,3,Charles Leclerc
-Austria,4,Lewis Hamilton
-Austria,5,George Russell
-Austria,6,Liam Lawson
-Austria,7,Fernando Alonso
-Austria,8,Gabriel Bortoleto
-Austria,9,Nico Hulkenberg
-Austria,10,Esteban Ocon
-Great Britain,1,Lando Norris
-Great Britain,2,Oscar Piastri
-Great Britain,3,Nico Hulkenberg
-Great Britain,4,Lewis Hamilton
-Great Britain,5,Max Verstappen
-Great Britain,6,Pierre Gasly
-Great Britain,7,Lance Stroll
-Great Britain,8,Alexander Albon
-Great Britain,9,Fernando Alonso
-Great Britain,10,George Russell
-Belgium Sprint,1,Max Verstappen
-Belgium Sprint,2,Oscar Piastri
-Belgium Sprint,3,Lando Norris
-Belgium Sprint,4,Charles Leclerc
-Belgium Sprint,5,Esteban Ocon
-Belgium Sprint,6,Carlos Sainz
-Belgium Sprint,7,Oliver Bearman
-Belgium Sprint,8,Isack Hadjar
-Belgium,1,Oscar Piastri
-Belgium,2,Lando Norris
-Belgium,3,Charles Leclerc
-Belgium,4,Max Verstappen
-Belgium,5,George Russell
-Belgium,6,Alexander Albon
-Belgium,7,Lewis Hamilton
-Belgium,8,Liam Lawson
-Belgium,9,Gabriel Bortoleto
-Belgium,10,Pierre Gasly
-Hungary,1,Lando Norris
-Hungary,2,Oscar Piastri
-Hungary,3,George Russell
-Hungary,4,Charles Leclerc
-Hungary,5,Fernando Alonso
-Hungary,6,Gabriel Bortoleto
-Hungary,7,Lance Stroll
-Hungary,8,Liam Lawson
-Hungary,9,Max Verstappen
-Hungary,10,Kimi Antonelli
-Netherlands,1,Oscar Piastri
-Netherlands,2,Max Verstappen
-Netherlands,3,Isack Hadjar
-Netherlands,4,George Russell
-Netherlands,5,Alexander Albon
-Netherlands,6,Oliver Bearman
-Netherlands,7,Lance Stroll
-Netherlands,8,Fernando Alonso
-Netherlands,9,Yuki Tsunoda
-Netherlands,10,Esteban Ocon
-Italy,1,Max Verstappen
-Italy,2,Lando Norris
-Italy,3,Oscar Piastri
-Italy,4,Charles Leclerc
-Italy,5,George Russell
-Italy,6,Lewis Hamilton
-Italy,7,Alexander Albon
-Italy,8,Gabriel Bortoleto
-Italy,9,Kimi Antonelli
-Italy,10,Isack Hadjar
-Azerbaijan,1,Max Verstappen
-Azerbaijan,2,George Russell
-Azerbaijan,3,Carlos Sainz
-Azerbaijan,4,Kimi Antonelli
-Azerbaijan,5,Liam Lawson
-Azerbaijan,6,Yuki Tsunoda
-Azerbaijan,7,Lando Norris
-Azerbaijan,8,Lewis Hamilton
-Azerbaijan,9,Charles Leclerc
-Azerbaijan,10,Isack Hadjar
-Singapore,1,George Russell
-Singapore,2,Max Verstappen
-Singapore,3,Lando Norris
-Singapore,4,Oscar Piastri
-Singapore,5,Kimi Antonelli
-Singapore,6,Charles Leclerc
-Singapore,7,Fernando Alonso
-Singapore,8,Lewis Hamilton
-Singapore,9,Oliver Bearman
-Singapore,10,Carlos Sainz
-United States Sprint,1,Max Verstappen
-United States Sprint,2,George Russell
-United States Sprint,3,Carlos Sainz
-United States Sprint,4,Lewis Hamilton
-United States Sprint,5,Charles Leclerc
-United States Sprint,6,Alexander Albon
-United States Sprint,7,Yuki Tsunoda
-United States Sprint,8,Kimi Antonelli
-United States,1,Max Verstappen
-United States,2,Lando Norris
-United States,3,Charles Leclerc
-United States,4,Lewis Hamilton
-United States,5,Oscar Piastri
-United States,6,George Russell
-United States,7,Yuki Tsunoda
-United States,8,Nico Hulkenberg
-United States,9,Oliver Bearman
-United States,10,Fernando Alonso
-Mexico,1,Lando Norris
-Mexico,2,Charles Leclerc
-Mexico,3,Max Verstappen
-Mexico,4,Oliver Bearman
-Mexico,5,Oscar Piastri
-Mexico,6,Kimi Antonelli
-Mexico,7,George Russell
-Mexico,8,Lewis Hamilton
-Mexico,9,Esteban Ocon
-Mexico,10,Gabriel Bortoleto
-Brazil Sprint,1,Lando Norris
-Brazil Sprint,2,Kimi Antonelli
-Brazil Sprint,3,George Russell
-Brazil Sprint,4,Max Verstappen
-Brazil Sprint,5,Charles Leclerc
-Brazil Sprint,6,Fernando Alonso
-Brazil Sprint,7,Lewis Hamilton
-Brazil Sprint,8,Pierre Gasly
-Brazil,1,Lando Norris
-Brazil,2,Kimi Antonelli
-Brazil,3,Max Verstappen
-Brazil,4,George Russell
-Brazil,5,Oscar Piastri
-Brazil,6,Oliver Bearman
-Brazil,7,Liam Lawson
-Brazil,8,Isack Hadjar
-Brazil,9,Nico Hulkenberg
-Brazil,10,Pierre Gasly
-Las Vegas,1,Max Verstappen
-Las Vegas,2,George Russell
-Las Vegas,3,Kimi Antonelli
-Las Vegas,4,Charles Leclerc
-Las Vegas,5,Carlos Sainz
-Las Vegas,6,Isack Hadjar
-Las Vegas,7,Nico Hulkenberg
-Las Vegas,8,Lewis Hamilton
-Las Vegas,9,Esteban Ocon
-Las Vegas,10,Oliver Bearman
-Qatar Sprint,1,Oscar Piastri
-Qatar Sprint,2,George Russell
-Qatar Sprint,3,Lando Norris
-Qatar Sprint,4,Max Verstappen
-Qatar Sprint,5,Yuki Tsunoda
-Qatar Sprint,6,Kimi Antonelli
-Qatar Sprint,7,Fernando Alonso
-Qatar Sprint,8,Carlos Sainz
-Qatar,1,Max Verstappen
-Qatar,2,Oscar Piastri
-Qatar,3,Carlos Sainz
-Qatar,4,Lando Norris
-Qatar,5,Kimi Antonelli
-Qatar,6,George Russell
-Qatar,7,Fernando Alonso
-Qatar,8,Charles Leclerc
-Qatar,9,Liam Lawson
-Qatar,10,Yuki Tsunoda
-Abu Dhabi,1,Max Verstappen
-Abu Dhabi,2,Oscar Piastri
-Abu Dhabi,3,Lando Norris
-Abu Dhabi,4,Charles Leclerc
-Abu Dhabi,5,George Russell
-Abu Dhabi,6,Fernando Alonso
-Abu Dhabi,7,Esteban Ocon
-Abu Dhabi,8,Lewis Hamilton
-Abu Dhabi,9,Nico Hulkenberg
-Abu Dhabi,10,Lance Stroll
+Australia,1,Lando Norris,McLaren,25
+Australia,2,Max Verstappen,Red Bull Racing,18
+Australia,3,George Russell,Mercedes,15
+Australia,4,Kimi Antonelli,Mercedes,12
+Australia,5,Alexander Albon,Williams,10
+Australia,6,Lance Stroll,Aston Martin,8
+Australia,7,Nico Hulkenberg,Kick Sauber,6
+Australia,8,Charles Leclerc,Ferrari,4
+Australia,9,Oscar Piastri,McLaren,2
+Australia,10,Lewis Hamilton,Ferrari,1
+China,1,Oscar Piastri,McLaren,25
+China,2,Lando Norris,McLaren,18
+China,3,George Russell,Mercedes,15
+China,4,Max Verstappen,Red Bull Racing,12
+China,5,Esteban Ocon,Haas,10
+China,6,Kimi Antonelli,Mercedes,8
+China,7,Alexander Albon,Williams,6
+China,8,Oliver Bearman,Haas,4
+China,9,Lance Stroll,Aston Martin,2
+China,10,Carlos Sainz,Williams,1
+China Sprint,1,Lewis Hamilton,Ferrari,8
+China Sprint,2,Oscar Piastri,McLaren,7
+China Sprint,3,Max Verstappen,Red Bull Racing,6
+China Sprint,4,George Russell,Mercedes,5
+China Sprint,5,Charles Leclerc,Ferrari,4
+China Sprint,6,Yuki Tsunoda,Racing Bulls,3
+China Sprint,7,Kimi Antonelli,Mercedes,2
+China Sprint,8,Lando Norris,McLaren,1
+Japan,1,Max Verstappen,Red Bull Racing,25
+Japan,2,Lando Norris,McLaren,18
+Japan,3,Oscar Piastri,McLaren,15
+Japan,4,Charles Leclerc,Ferrari,12
+Japan,5,George Russell,Mercedes,10
+Japan,6,Kimi Antonelli,Mercedes,8
+Japan,7,Lewis Hamilton,Ferrari,6
+Japan,8,Isack Hadjar,Racing Bulls,4
+Japan,9,Alexander Albon,Williams,2
+Japan,10,Oliver Bearman,Haas,1
+Bahrain,1,Oscar Piastri,McLaren,25
+Bahrain,2,George Russell,Mercedes,18
+Bahrain,3,Lando Norris,McLaren,15
+Bahrain,4,Charles Leclerc,Ferrari,12
+Bahrain,5,Lewis Hamilton,Ferrari,10
+Bahrain,6,Max Verstappen,Red Bull Racing,8
+Bahrain,7,Pierre Gasly,Alpine,6
+Bahrain,8,Esteban Ocon,Haas,4
+Bahrain,9,Yuki Tsunoda,Racing Bulls,2
+Bahrain,10,Oliver Bearman,Haas,1
+Saudi Arabia,1,Oscar Piastri,McLaren,25
+Saudi Arabia,2,Max Verstappen,Red Bull Racing,18
+Saudi Arabia,3,Charles Leclerc,Ferrari,15
+Saudi Arabia,4,Lando Norris,McLaren,12
+Saudi Arabia,5,George Russell,Mercedes,10
+Saudi Arabia,6,Kimi Antonelli,Mercedes,8
+Saudi Arabia,7,Lewis Hamilton,Ferrari,6
+Saudi Arabia,8,Carlos Sainz,Williams,4
+Saudi Arabia,9,Alexander Albon,Williams,2
+Saudi Arabia,10,Isack Hadjar,Racing Bulls,1
+Miami Sprint,1,Lando Norris,McLaren,8
+Miami Sprint,2,Oscar Piastri,McLaren,7
+Miami Sprint,3,Lewis Hamilton,Ferrari,6
+Miami Sprint,4,George Russell,Mercedes,5
+Miami Sprint,5,Lance Stroll,Aston Martin,4
+Miami Sprint,6,Yuki Tsunoda,Racing Bulls,3
+Miami Sprint,7,Kimi Antonelli,Mercedes,2
+Miami Sprint,8,Pierre Gasly,Alpine,1
+Miami,1,Oscar Piastri,McLaren,25
+Miami,2,Lando Norris,McLaren,18
+Miami,3,George Russell,Mercedes,15
+Miami,4,Max Verstappen,Red Bull Racing,12
+Miami,5,Alexander Albon,Williams,10
+Miami,6,Kimi Antonelli,Mercedes,8
+Miami,7,Charles Leclerc,Ferrari,6
+Miami,8,Lewis Hamilton,Ferrari,4
+Miami,9,Carlos Sainz,Williams,2
+Miami,10,Yuki Tsunoda,Racing Bulls,1
+Emilia Romagna,1,Max Verstappen,Red Bull Racing,25
+Emilia Romagna,2,Lando Norris,McLaren,18
+Emilia Romagna,3,Oscar Piastri,McLaren,15
+Emilia Romagna,4,Lewis Hamilton,Ferrari,12
+Emilia Romagna,5,Alexander Albon,Williams,10
+Emilia Romagna,6,Charles Leclerc,Ferrari,8
+Emilia Romagna,7,George Russell,Mercedes,6
+Emilia Romagna,8,Carlos Sainz,Williams,4
+Emilia Romagna,9,Isack Hadjar,Racing Bulls,2
+Emilia Romagna,10,Yuki Tsunoda,Racing Bulls,1
+Monaco,1,Lando Norris,McLaren,25
+Monaco,2,Charles Leclerc,Ferrari,18
+Monaco,3,Oscar Piastri,McLaren,15
+Monaco,4,Max Verstappen,Red Bull Racing,12
+Monaco,5,Lewis Hamilton,Ferrari,10
+Monaco,6,Isack Hadjar,Racing Bulls,8
+Monaco,7,Esteban Ocon,Haas,6
+Monaco,8,Liam Lawson,Racing Bulls,4
+Monaco,9,Alexander Albon,Williams,2
+Monaco,10,Carlos Sainz,Williams,1
+Spain,1,Oscar Piastri,McLaren,25
+Spain,2,Lando Norris,McLaren,18
+Spain,3,Charles Leclerc,Ferrari,15
+Spain,4,George Russell,Mercedes,12
+Spain,5,Nico Hulkenberg,Kick Sauber,10
+Spain,6,Lewis Hamilton,Ferrari,8
+Spain,7,Isack Hadjar,Racing Bulls,6
+Spain,8,Pierre Gasly,Alpine,4
+Spain,9,Fernando Alonso,Aston Martin,2
+Spain,10,Max Verstappen,Red Bull Racing,1
+Canada,1,George Russell,Mercedes,25
+Canada,2,Max Verstappen,Red Bull Racing,18
+Canada,3,Kimi Antonelli,Mercedes,15
+Canada,4,Oscar Piastri,McLaren,12
+Canada,5,Charles Leclerc,Ferrari,10
+Canada,6,Lewis Hamilton,Ferrari,8
+Canada,7,Fernando Alonso,Aston Martin,6
+Canada,8,Nico Hulkenberg,Kick Sauber,4
+Canada,9,Esteban Ocon,Haas,2
+Canada,10,Carlos Sainz,Williams,1
+Austria,1,Lando Norris,McLaren,25
+Austria,2,Oscar Piastri,McLaren,18
+Austria,3,Charles Leclerc,Ferrari,15
+Austria,4,Lewis Hamilton,Ferrari,12
+Austria,5,George Russell,Mercedes,10
+Austria,6,Liam Lawson,Racing Bulls,8
+Austria,7,Fernando Alonso,Aston Martin,6
+Austria,8,Gabriel Bortoleto,Kick Sauber,4
+Austria,9,Nico Hulkenberg,Kick Sauber,2
+Austria,10,Esteban Ocon,Haas,1
+Great Britain,1,Lando Norris,McLaren,25
+Great Britain,2,Oscar Piastri,McLaren,18
+Great Britain,3,Nico Hulkenberg,Kick Sauber,15
+Great Britain,4,Lewis Hamilton,Ferrari,12
+Great Britain,5,Max Verstappen,Red Bull Racing,10
+Great Britain,6,Pierre Gasly,Alpine,8
+Great Britain,7,Lance Stroll,Aston Martin,6
+Great Britain,8,Alexander Albon,Williams,4
+Great Britain,9,Fernando Alonso,Aston Martin,2
+Great Britain,10,George Russell,Mercedes,1
+Belgium Sprint,1,Max Verstappen,Red Bull Racing,8
+Belgium Sprint,2,Oscar Piastri,McLaren,7
+Belgium Sprint,3,Lando Norris,McLaren,6
+Belgium Sprint,4,Charles Leclerc,Ferrari,5
+Belgium Sprint,5,Esteban Ocon,Haas,4
+Belgium Sprint,6,Carlos Sainz,Williams,3
+Belgium Sprint,7,Oliver Bearman,Haas,2
+Belgium Sprint,8,Isack Hadjar,Racing Bulls,1
+Belgium,1,Oscar Piastri,McLaren,25
+Belgium,2,Lando Norris,McLaren,18
+Belgium,3,Charles Leclerc,Ferrari,15
+Belgium,4,Max Verstappen,Red Bull Racing,12
+Belgium,5,George Russell,Mercedes,10
+Belgium,6,Alexander Albon,Williams,8
+Belgium,7,Lewis Hamilton,Ferrari,6
+Belgium,8,Liam Lawson,Racing Bulls,4
+Belgium,9,Gabriel Bortoleto,Kick Sauber,2
+Belgium,10,Pierre Gasly,Alpine,1
+Hungary,1,Lando Norris,McLaren,25
+Hungary,2,Oscar Piastri,McLaren,18
+Hungary,3,George Russell,Mercedes,15
+Hungary,4,Charles Leclerc,Ferrari,12
+Hungary,5,Fernando Alonso,Aston Martin,10
+Hungary,6,Gabriel Bortoleto,Kick Sauber,8
+Hungary,7,Lance Stroll,Aston Martin,6
+Hungary,8,Liam Lawson,Racing Bulls,4
+Hungary,9,Max Verstappen,Red Bull Racing,2
+Hungary,10,Kimi Antonelli,Mercedes,1
+Netherlands,1,Oscar Piastri,McLaren,25
+Netherlands,2,Max Verstappen,Red Bull Racing,18
+Netherlands,3,Isack Hadjar,Racing Bulls,15
+Netherlands,4,George Russell,Mercedes,12
+Netherlands,5,Alexander Albon,Williams,10
+Netherlands,6,Oliver Bearman,Haas,8
+Netherlands,7,Lance Stroll,Aston Martin,6
+Netherlands,8,Fernando Alonso,Aston Martin,4
+Netherlands,9,Yuki Tsunoda,Racing Bulls,2
+Netherlands,10,Esteban Ocon,Haas,1
+Italy,1,Max Verstappen,Red Bull Racing,25
+Italy,2,Lando Norris,McLaren,18
+Italy,3,Oscar Piastri,McLaren,15
+Italy,4,Charles Leclerc,Ferrari,12
+Italy,5,George Russell,Mercedes,10
+Italy,6,Lewis Hamilton,Ferrari,8
+Italy,7,Alexander Albon,Williams,6
+Italy,8,Gabriel Bortoleto,Kick Sauber,4
+Italy,9,Kimi Antonelli,Mercedes,2
+Italy,10,Isack Hadjar,Racing Bulls,1
+Azerbaijan,1,Max Verstappen,Red Bull Racing,25
+Azerbaijan,2,George Russell,Mercedes,18
+Azerbaijan,3,Carlos Sainz,Williams,15
+Azerbaijan,4,Kimi Antonelli,Mercedes,12
+Azerbaijan,5,Liam Lawson,Racing Bulls,10
+Azerbaijan,6,Yuki Tsunoda,Racing Bulls,8
+Azerbaijan,7,Lando Norris,McLaren,6
+Azerbaijan,8,Lewis Hamilton,Ferrari,4
+Azerbaijan,9,Charles Leclerc,Ferrari,2
+Azerbaijan,10,Isack Hadjar,Racing Bulls,1
+Singapore,1,George Russell,Mercedes,25
+Singapore,2,Max Verstappen,Red Bull Racing,18
+Singapore,3,Lando Norris,McLaren,15
+Singapore,4,Oscar Piastri,McLaren,12
+Singapore,5,Kimi Antonelli,Mercedes,10
+Singapore,6,Charles Leclerc,Ferrari,8
+Singapore,7,Fernando Alonso,Aston Martin,6
+Singapore,8,Lewis Hamilton,Ferrari,4
+Singapore,9,Oliver Bearman,Haas,2
+Singapore,10,Carlos Sainz,Williams,1
+United States Sprint,1,Max Verstappen,Red Bull Racing,8
+United States Sprint,2,George Russell,Mercedes,7
+United States Sprint,3,Carlos Sainz,Williams,6
+United States Sprint,4,Lewis Hamilton,Ferrari,5
+United States Sprint,5,Charles Leclerc,Ferrari,4
+United States Sprint,6,Alexander Albon,Williams,3
+United States Sprint,7,Yuki Tsunoda,Racing Bulls,2
+United States Sprint,8,Kimi Antonelli,Mercedes,1
+United States,1,Max Verstappen,Red Bull Racing,25
+United States,2,Lando Norris,McLaren,18
+United States,3,Charles Leclerc,Ferrari,15
+United States,4,Lewis Hamilton,Ferrari,12
+United States,5,Oscar Piastri,McLaren,10
+United States,6,George Russell,Mercedes,8
+United States,7,Yuki Tsunoda,Racing Bulls,6
+United States,8,Nico Hulkenberg,Kick Sauber,4
+United States,9,Oliver Bearman,Haas,2
+United States,10,Fernando Alonso,Aston Martin,1
+Mexico,1,Lando Norris,McLaren,25
+Mexico,2,Charles Leclerc,Ferrari,18
+Mexico,3,Max Verstappen,Red Bull Racing,15
+Mexico,4,Oliver Bearman,Haas,12
+Mexico,5,Oscar Piastri,McLaren,10
+Mexico,6,Kimi Antonelli,Mercedes,8
+Mexico,7,George Russell,Mercedes,6
+Mexico,8,Lewis Hamilton,Ferrari,4
+Mexico,9,Esteban Ocon,Haas,2
+Mexico,10,Gabriel Bortoleto,Kick Sauber,1
+Brazil Sprint,1,Lando Norris,McLaren,8
+Brazil Sprint,2,Kimi Antonelli,Mercedes,7
+Brazil Sprint,3,George Russell,Mercedes,6
+Brazil Sprint,4,Max Verstappen,Red Bull Racing,5
+Brazil Sprint,5,Charles Leclerc,Ferrari,4
+Brazil Sprint,6,Fernando Alonso,Aston Martin,3
+Brazil Sprint,7,Lewis Hamilton,Ferrari,2
+Brazil Sprint,8,Pierre Gasly,Alpine,1
+Brazil,1,Lando Norris,McLaren,25
+Brazil,2,Kimi Antonelli,Mercedes,18
+Brazil,3,Max Verstappen,Red Bull Racing,15
+Brazil,4,George Russell,Mercedes,12
+Brazil,5,Oscar Piastri,McLaren,10
+Brazil,6,Oliver Bearman,Haas,8
+Brazil,7,Liam Lawson,Racing Bulls,6
+Brazil,8,Isack Hadjar,Racing Bulls,4
+Brazil,9,Nico Hulkenberg,Kick Sauber,2
+Brazil,10,Pierre Gasly,Alpine,1
+Las Vegas,1,Max Verstappen,Red Bull Racing,25
+Las Vegas,2,George Russell,Mercedes,18
+Las Vegas,3,Kimi Antonelli,Mercedes,15
+Las Vegas,4,Charles Leclerc,Ferrari,12
+Las Vegas,5,Carlos Sainz,Williams,10
+Las Vegas,6,Isack Hadjar,Racing Bulls,8
+Las Vegas,7,Nico Hulkenberg,Kick Sauber,6
+Las Vegas,8,Lewis Hamilton,Ferrari,4
+Las Vegas,9,Esteban Ocon,Haas,2
+Las Vegas,10,Oliver Bearman,Haas,1
+Qatar Sprint,1,Oscar Piastri,McLaren,8
+Qatar Sprint,2,George Russell,Mercedes,7
+Qatar Sprint,3,Lando Norris,McLaren,6
+Qatar Sprint,4,Max Verstappen,Red Bull Racing,5
+Qatar Sprint,5,Yuki Tsunoda,Racing Bulls,4
+Qatar Sprint,6,Kimi Antonelli,Mercedes,3
+Qatar Sprint,7,Fernando Alonso,Aston Martin,2
+Qatar Sprint,8,Carlos Sainz,Williams,1
+Qatar,1,Max Verstappen,Red Bull Racing,25
+Qatar,2,Oscar Piastri,McLaren,18
+Qatar,3,Carlos Sainz,Williams,15
+Qatar,4,Lando Norris,McLaren,12
+Qatar,5,Kimi Antonelli,Mercedes,10
+Qatar,6,George Russell,Mercedes,8
+Qatar,7,Fernando Alonso,Aston Martin,6
+Qatar,8,Charles Leclerc,Ferrari,4
+Qatar,9,Liam Lawson,Racing Bulls,2
+Qatar,10,Yuki Tsunoda,Racing Bulls,1
+Abu Dhabi,1,Max Verstappen,Red Bull Racing,25
+Abu Dhabi,2,Oscar Piastri,McLaren,18
+Abu Dhabi,3,Lando Norris,McLaren,15
+Abu Dhabi,4,Charles Leclerc,Ferrari,12
+Abu Dhabi,5,George Russell,Mercedes,10
+Abu Dhabi,6,Fernando Alonso,Aston Martin,8
+Abu Dhabi,7,Esteban Ocon,Haas,6
+Abu Dhabi,9,Nico Hulkenberg,Kick Sauber,2
+Abu Dhabi,10,Lance Stroll,Aston Martin,1
