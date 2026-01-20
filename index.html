@@ -2,141 +2,181 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 2025 Szezon Elemzés</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formula 1 – 2023 Szezon Elemzés</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Vega stack -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
-<body class="bg-[#050505] text-white min-h-screen p-6 font-sans">
-  <div class="max-w-7xl mx-auto">
-    
-    <div class="bg-gradient-to-r from-red-700 to-black rounded-3xl shadow-2xl p-10 mb-8 border border-red-900/50">
-      <h1 class="text-6xl font-black italic tracking-tighter uppercase">F1 <span class="text-red-600">2025</span> RECAP</h1>
-      <p class="text-2xl text-slate-300 mb-6 font-light">Szezonvégi Teljesítmény-Normalizálás (Z-Score)</p>
-      <div class="flex gap-4">
-        <span class="bg-white/10 backdrop-blur-md text-white px-6 py-2 rounded-full text-sm font-bold border border-white/20 uppercase tracking-widest">Official 2025 Records</span>
-        <span class="bg-red-600/20 text-red-500 border border-red-600/50 px-6 py-2 rounded-full text-sm font-bold uppercase">Management Report</span>
-      </div>
+
+<body class="bg-black text-white min-h-screen p-6 font-sans">
+
+<div class="max-w-7xl mx-auto">
+
+  <!-- HEADER -->
+  <div class="bg-gradient-to-r from-red-700 to-black p-10 rounded-3xl mb-10 border border-red-800">
+    <h1 class="text-5xl font-black uppercase italic">
+      Formula 1 <span class="text-red-500">2023</span> Szezon Elemzés
+    </h1>
+    <p class="text-slate-300 text-xl mt-4">
+      Valós adatok • Z-score normalizálás • Befektetői szemlélet
+    </p>
+  </div>
+
+  <!-- INFO CARDS -->
+  <div class="grid md:grid-cols-4 gap-6 mb-12">
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-zinc-400 text-sm uppercase">Világbajnok</p>
+      <h3 class="text-3xl font-black text-red-500">Verstappen</h3>
     </div>
-
-    <div class="grid md:grid-cols-4 gap-6 mb-10">
-      <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800 shadow-xl">
-        <p class="text-zinc-500 text-sm font-bold uppercase mb-2">Bajnok</p>
-        <h3 class="text-3xl font-black text-red-600">Verstappen</h3>
-        <p class="text-xs mt-2 text-zinc-400 italic">5. Világbajnoki cím</p>
-      </div>
-      <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800 shadow-xl">
-        <p class="text-zinc-500 text-sm font-bold uppercase mb-2">Ferrari LH44</p>
-        <h3 class="text-3xl font-black text-yellow-500">P2 / P3</h3>
-        <p class="text-xs mt-2 text-zinc-400 italic">Hamilton első ferraris éve</p>
-      </div>
-      <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800 shadow-xl">
-        <p class="text-zinc-500 text-sm font-bold uppercase mb-2">Adatmennyiség</p>
-        <h3 class="text-3xl font-black text-blue-500">1,000+</h3>
-        <p class="text-xs mt-2 text-zinc-400 italic">Telemetria és eredmények</p>
-      </div>
-      <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-800 shadow-xl">
-        <p class="text-zinc-500 text-sm font-bold uppercase mb-2">Módszer</p>
-        <h3 class="text-3xl font-black text-emerald-500 italic">Z-Score</h3>
-        <p class="text-xs mt-2 text-zinc-400 italic">Objektív normalizálás</p>
-      </div>
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-zinc-400 text-sm uppercase">Szezon</p>
+      <h3 class="text-3xl font-black text-blue-400">2023</h3>
     </div>
-
-    <div class="grid lg:grid-cols-3 gap-8 mb-10">
-      <div class="lg:col-span-2 bg-white rounded-3xl p-8 shadow-2xl">
-        <h2 class="text-2xl font-bold text-black mb-6 flex items-center gap-2">
-          <span class="w-2 h-8 bg-red-600 rounded-full"></span>
-          Versenyzői Dominancia Index (Z-Score)
-        </h2>
-        <div id="zscore-chart" class="w-full"></div>
-      </div>
-
-      <div class="bg-white rounded-3xl p-8 shadow-2xl">
-        <h2 class="text-2xl font-bold text-black mb-6">Ponteloszlás</h2>
-        <div id="points-chart" class="w-full"></div>
-      </div>
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-zinc-400 text-sm uppercase">Adattípus</p>
+      <h3 class="text-3xl font-black text-emerald-400">Versenyadatok</h3>
     </div>
-
-    <div class="bg-zinc-900 rounded-3xl p-10 border border-zinc-800">
-      <div class="flex flex-col md:flex-row gap-10">
-        <div class="md:w-1/2">
-          <h3 class="text-3xl font-bold text-white mb-4 italic uppercase">Vezetői Összefoglaló</h3>
-          <p class="text-zinc-400 leading-relaxed mb-4">
-            A 2025-ös szezon adatai alapján a <strong>Z-score normalizálás</strong> rávilágít arra, hogy a Red Bull és a Ferrari közötti különbség drasztikusan lecsökkent. Míg Verstappen továbbra is pozitív tartományban (0 felett) mozog, Lewis Hamilton ferraris bemutatkozása a szezon második felében statisztikailag szignifikáns javulást mutatott.
-          </p>
-          <div class="p-4 bg-red-600/10 border border-red-600/20 rounded-xl text-red-500 text-sm font-mono italic">
-            "A befektetők számára a magas Z-score érték a konzisztens megtérülést (pontokat) szimbolizálja."
-          </div>
-        </div>
-        <div class="md:w-1/2 grid grid-cols-2 gap-4">
-          <div class="p-6 bg-black/40 rounded-2xl border border-zinc-700">
-            <h4 class="text-emerald-500 font-bold mb-1">Max Speed</h4>
-            <p class="text-2xl font-black">344 km/h</p>
-            <p class="text-xs text-zinc-500 underline decoration-emerald-500">Las Vegas GP</p>
-          </div>
-          <div class="p-6 bg-black/40 rounded-2xl border border-zinc-700">
-            <h4 class="text-blue-500 font-bold mb-1">Total Laps</h4>
-            <p class="text-2xl font-black">1,450+</p>
-            <p class="text-xs text-zinc-500 underline decoration-blue-500">Season Total</p>
-          </div>
-        </div>
-      </div>
+    <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
+      <p class="text-zinc-400 text-sm uppercase">Normalizálás</p>
+      <h3 class="text-3xl font-black text-yellow-400">Z-score</h3>
     </div>
   </div>
 
-  <script>
-    // VEGA-LITE Z-SCORE CHART
-    const zSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container", "height": 400,
-      "data": { "url": "data.csv" },
-      "transform": [
-        {
-          "aggregate": [{"op": "sum", "field": "Points", "as": "TotalPoints"}],
-          "groupby": ["Driver", "Team"]
-        },
-        {
-          "window": [
-            {"op": "mean", "field": "TotalPoints", "as": "avgP"},
-            {"op": "stdev", "field": "TotalPoints", "as": "stdP"}
-          ]
-        },
-        {
-          "calculate": "(datum.TotalPoints - datum.avgP) / datum.stdP",
-          "as": "z"
-        }
+  <!-- CHARTS -->
+  <div class="grid lg:grid-cols-2 gap-10 mb-12">
+
+    <!-- Z SCORE -->
+    <div class="bg-white p-8 rounded-3xl shadow-xl">
+      <h2 class="text-black text-2xl font-bold mb-6">
+        Versenyzői teljesítmény (Z-score)
+      </h2>
+      <div id="zscore-chart"></div>
+    </div>
+
+    <!-- TEAM POINTS -->
+    <div class="bg-white p-8 rounded-3xl shadow-xl">
+      <h2 class="text-black text-2xl font-bold mb-6">
+        Csapatonkénti összpontszám
+      </h2>
+      <div id="team-chart"></div>
+    </div>
+
+  </div>
+
+  <!-- SCATTER -->
+  <div class="bg-white p-8 rounded-3xl shadow-xl mb-12">
+    <h2 class="text-black text-2xl font-bold mb-6">
+      Átlagos köridő vs pontszám
+    </h2>
+    <div id="scatter-chart"></div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="bg-zinc-900 p-10 rounded-3xl border border-zinc-800">
+    <h3 class="text-3xl font-bold mb-4 uppercase italic">
+      Vezetői összefoglaló
+    </h3>
+    <p class="text-zinc-400 leading-relaxed">
+      A 2023-as szezon elemzése azt mutatja, hogy Max Verstappen nemcsak abszolút
+      pontszámban, hanem statisztikai értelemben is kiemelkedett a mezőnyből.
+      A Z-score normalizálás segít objektíven összehasonlítani a versenyzők
+      teljesítményét, függetlenül a versenyek számától.
+    </p>
+  </div>
+
+</div>
+
+<!-- VEGA-LITE SCRIPTS -->
+<script>
+
+const zScoreSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 350,
+  "data": { "url": "data.csv" },
+  "transform": [
+    {
+      "aggregate": [
+        { "op": "sum", "field": "Points", "as": "TotalPoints" }
       ],
-      "mark": {"type": "bar", "cornerRadiusEnd": 10},
-      "encoding": {
-        "x": {"field": "Driver", "type": "nominal", "sort": "-y", "title": null},
-        "y": {"field": "z", "type": "quantitative", "title": "Z-Score Teljesítmény"},
-        "color": {
-          "field": "z", 
-          "type": "quantitative", 
-          "scale": {"scheme": "redblue", "domainMid": 0},
-          "legend": null
-        },
-        "tooltip": [{"field": "Driver"}, {"field": "TotalPoints", "title": "Pontok"}, {"field": "z", "format": ".2f"}]
-      }
-    };
+      "groupby": ["Driver"]
+    },
+    {
+      "joinaggregate": [
+        { "op": "mean", "field": "TotalPoints", "as": "meanP" },
+        { "op": "stdev", "field": "TotalPoints", "as": "stdP" }
+      ]
+    },
+    {
+      "calculate": "(datum.TotalPoints - datum.meanP) / datum.stdP",
+      "as": "ZScore"
+    }
+  ],
+  "mark": { "type": "bar", "cornerRadiusEnd": 6 },
+  "encoding": {
+    "x": { "field": "Driver", "type": "nominal", "sort": "-y" },
+    "y": { "field": "ZScore", "type": "quantitative" },
+    "color": {
+      "field": "ZScore",
+      "type": "quantitative",
+      "scale": { "scheme": "redblue", "domainMid": 0 },
+      "legend": null
+    },
+    "tooltip": [
+      { "field": "Driver" },
+      { "field": "TotalPoints", "title": "Összpont" },
+      { "field": "ZScore", "format": ".2f" }
+    ]
+  }
+};
 
-    // PIE CHART FOR TEAMS
-    const pSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": "container", "height": 300,
-      "data": { "url": "data.csv" },
-      "mark": {"type": "arc", "innerRadius": 50},
-      "encoding": {
-        "theta": {"field": "Points", "type": "quantitative", "aggregate": "sum"},
-        "color": {"field": "Team", "type": "nominal", "scale": {"range": ["#DC0000", "#1E41FF", "#FF8700"]}},
-        "tooltip": [{"field": "Team"}, {"field": "Points", "aggregate": "sum"}]
-      }
-    };
+const teamSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 300,
+  "data": { "url": "data.csv" },
+  "mark": "bar",
+  "encoding": {
+    "x": { "field": "Team", "type": "nominal" },
+    "y": { "aggregate": "sum", "field": "Points" },
+    "color": { "field": "Team", "type": "nominal" },
+    "tooltip": [
+      { "field": "Team" },
+      { "aggregate": "sum", "field": "Points", "title": "Pontok" }
+    ]
+  }
+};
 
-    vegaEmbed('#zscore-chart', zSpec, {actions: false});
-    vegaEmbed('#points-chart', pSpec, {actions: false});
-  </script>
+const scatterSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 350,
+  "data": { "url": "data.csv" },
+  "mark": "circle",
+  "encoding": {
+    "x": { "field": "LapTimeAvg", "type": "quantitative" },
+    "y": { "field": "Points", "type": "quantitative" },
+    "color": { "field": "Driver", "type": "nominal" },
+    "tooltip": [
+      { "field": "Race" },
+      { "field": "Driver" },
+      { "field": "LapTimeAvg" },
+      { "field": "Points" }
+    ]
+  }
+};
+
+vegaEmbed("#zscore-chart", zScoreSpec, { actions: false });
+vegaEmbed("#team-chart", teamSpec, { actions: false });
+vegaEmbed("#scatter-chart", scatterSpec, { actions: false });
+
+</script>
+
 </body>
 </html>
