@@ -20,7 +20,7 @@
 
   <!-- LINE CHART: TOP 3 PILÓTA -->
   <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Top 3 pilóta pont trend</h2>
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Top 3 pilóta kumulatív pont trend</h2>
     <canvas id="pointsChart" height="120"></canvas>
   </div>
 
@@ -49,176 +49,188 @@ const teamColors = {
   "Kick Sauber": "#FFD700",
   "Racing Bulls": "#6699FF",
   "Haas F1 Team": "#B6BABD",
+  "Haas": "#B6BABD",
   "Alpine": "#0090FF"
 };
 
-// --- TOP 3 PILÓTA PONT TREND (KUMULATÍV) ---
-const drivers = ["Lando Norris","Max Verstappen","Oscar Piastri"];
-const driverTeams = {
-  "Lando Norris":"McLaren",
-  "Max Verstappen":"Red Bull Racing",
-  "Oscar Piastri":"McLaren"
-};
-const races = ["Australia","China","China Sprint","Japan","Bahrain","Saudi Arabia",
-  "Miami Sprint","Miami","Emilia Romagna","Monaco","Spain","Canada",
-  "Austria","Great Britain","Belgium Sprint","Belgium","Hungary","Netherlands",
-  "Italy","Azerbaijan","Singapore","United States Sprint","United States",
-  "Mexico","Brazil Sprint","Brazil","Las Vegas","Qatar Sprint","Qatar","Abu Dhabi"];
-const points = {
-  "Lando Norris":[25,18,1,18,15,18,8,18,18,25,18,18,25,25,1,18,25,18,18,15,18,2,18,25,8,25,18,1,18,18],
-  "Max Verstappen":[18,15,6,25,10,18,5,25,25,18,10,18,9,18,8,25,9,18,25,25,15,8,18,15,5,25,25,4,25,25],
-  "Oscar Piastri":[15,25,7,15,25,25,6,25,15,15,25,15,18,25,7,25,18,25,15,18,12,7,25,5,6,18,15,2,15,25]
-};
-
-// Kumulatív pontszámok számítása
-const cumulativePoints = {};
-drivers.forEach(driver => {
-  cumulativePoints[driver] = [];
-  let sum = 0;
-  points[driver].forEach(point => {
-    sum += point;
-    cumulativePoints[driver].push(sum);
-  });
-});
-
-const datasets = drivers.map(driver=>({
-  label: driver,
-  data: cumulativePoints[driver],
-  borderColor: teamColors[driverTeams[driver]],
-  backgroundColor: teamColors[driverTeams[driver]]+"55",
-  fill:true,
-  tension:0.3,
-  borderWidth: 3
-}));
-new Chart(document.getElementById('pointsChart'),{
-  type:'line',
-  data:{labels:races,datasets:datasets},
-  options:{
-    responsive:true,
-    plugins:{
-      tooltip:{mode:'index',intersect:false},
-      legend:{position:'top',labels:{font:{size:16}}}
-    },
-    interaction:{mode:'nearest',axis:'x',intersect:false},
-    scales:{y:{title:{display:true,text:'Kumulatív pontok'},beginAtZero:true,max:450}}
-  }
-});
-
-// --- ÖSSZPONTOK MINDEN PILÓTÁRA ---
-const allDrivers = [
-  "Lando Norris","Max Verstappen","Oscar Piastri","Charles Leclerc","Lewis Hamilton",
-  "George Russell","Kimi Antonelli","Fernando Alonso","Lance Stroll","Pierre Gasly",
-  "Esteban Ocon","Oliver Bearman","Alexander Albon","Carlos Sainz","Nico Hulkenberg",
-  "Gabriel Bortoleto","Isack Hadjar","Liam Lawson","Yuki Tsunoda"
-];
-
-const allDriverTeams = {
-  "Lando Norris":"McLaren",
-  "Max Verstappen":"Red Bull Racing",
-  "Oscar Piastri":"McLaren",
-  "Charles Leclerc":"Ferrari",
-  "Lewis Hamilton":"Ferrari",
-  "George Russell":"Mercedes",
-  "Kimi Antonelli":"Mercedes",
-  "Fernando Alonso":"Aston Martin",
-  "Lance Stroll":"Aston Martin",
-  "Pierre Gasly":"Alpine",
-  "Esteban Ocon":"Haas F1 Team",
-  "Oliver Bearman":"Haas F1 Team",
-  "Alexander Albon":"Williams",
-  "Carlos Sainz":"Williams",
-  "Nico Hulkenberg":"Kick Sauber",
-  "Gabriel Bortoleto":"Kick Sauber",
-  "Isack Hadjar":"Racing Bulls",
-  "Liam Lawson":"Racing Bulls",
-  "Yuki Tsunoda":"Racing Bulls"
-};
-
-const totalPoints = {
-  "Lando Norris":423,
-  "Max Verstappen":421,
-  "Oscar Piastri":410,
-  "Charles Leclerc":242,
-  "Lewis Hamilton":156,
-  "George Russell":319,
-  "Kimi Antonelli":150,
-  "Fernando Alonso":56,
-  "Lance Stroll":33,
-  "Pierre Gasly":22,
-  "Esteban Ocon":38,
-  "Oliver Bearman":41,
-  "Alexander Albon":73,
-  "Carlos Sainz":64,
-  "Nico Hulkenberg":51,
-  "Gabriel Bortoleto":19,
-  "Isack Hadjar":51,
-  "Liam Lawson":38,
-  "Yuki Tsunoda":33
-};
-
-// Rendezés csökkenő sorrendbe
-const sortedDrivers = allDrivers.sort((a, b) => totalPoints[b] - totalPoints[a]);
-
-new Chart(document.getElementById('barChart'),{
-  type:'bar',
-  data:{
-    labels:sortedDrivers,
-    datasets:[{
-      label:'Összpont',
-      data:sortedDrivers.map(d=>totalPoints[d]),
-      backgroundColor:sortedDrivers.map(d=>teamColors[allDriverTeams[d]])
-    }]
-  },
-  options:{
-    responsive:true,
-    plugins:{
-      legend:{display:false},
-      tooltip:{enabled:true}
-    },
-    scales:{y:{beginAtZero:true,title:{display:true,text:'Pont'}}}
-  }
-});
-
-// --- TÉRKÉP: VERSENYPÁLYÁK ---
-const mapData = {
-  type: 'FeatureCollection',
-  features: [
-    {type:'Feature',properties:{race:'Australia',winner:'Lando Norris'},geometry:{type:'Point',coordinates:[133.88,-25.27]}},
-    {type:'Feature',properties:{race:'China',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[116.38,39.90]}},
-    {type:'Feature',properties:{race:'Japan',winner:'Max Verstappen'},geometry:{type:'Point',coordinates:[139.69,35.69]}},
-    {type:'Feature',properties:{race:'Bahrain',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[50.55,26.03]}},
-    {type:'Feature',properties:{race:'Saudi Arabia',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[39.57,21.61]}},
-    {type:'Feature',properties:{race:'Miami',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[-80.19,25.76]}}
-  ]
-};
-const ctx = document.getElementById('mapChart').getContext('2d');
-new Chart(ctx,{
-  type:'bubbleMap',
-  data:{
-    labels:mapData.features.map(f=>f.properties.race),
-    datasets:[{
-      label:'Versenyhelyszínek',
-      data:mapData.features.map(f=>({x:f.geometry.coordinates[0],y:f.geometry.coordinates[1],r:8, winner:f.properties.winner})),
-      backgroundColor:'#FF0000'
-    }]
-  },
-  options:{
-    plugins:{
-      tooltip:{
-        callbacks:{
-          label:function(context){
-            return context.raw.winner + " nyerte a " + context.label + " futamot";
-          }
+// CSV betöltése és feldolgozása
+async function loadData() {
+  try {
+    const response = await fetch('data.csv');
+    const csvText = await response.text();
+    
+    // CSV feldolgozása
+    const lines = csvText.trim().split('\n');
+    const raceData = {};
+    const driverPoints = {};
+    const driverTeams = {};
+    
+    lines.forEach(line => {
+      const [race, position, driver, team, points] = line.split(',');
+      
+      // Verseny adatok tárolása
+      if (!raceData[race]) {
+        raceData[race] = [];
+      }
+      raceData[race].push({ driver, team, points: parseInt(points) });
+      
+      // Pilóta pontjainak és csapatának tárolása
+      if (!driverPoints[driver]) {
+        driverPoints[driver] = [];
+        driverTeams[driver] = team;
+      }
+    });
+    
+    // Verseny sorrend meghatározása
+    const races = Object.keys(raceData);
+    
+    // Minden pilóta pontjainak összegyűjtése versenyek szerint
+    const allDrivers = Object.keys(driverPoints);
+    allDrivers.forEach(driver => {
+      races.forEach(race => {
+        const raceResult = raceData[race].find(r => r.driver === driver);
+        driverPoints[driver].push(raceResult ? raceResult.points : 0);
+      });
+    });
+    
+    // Összpontok számítása
+    const totalPoints = {};
+    allDrivers.forEach(driver => {
+      totalPoints[driver] = driverPoints[driver].reduce((sum, points) => sum + points, 0);
+    });
+    
+    // Top 3 pilóta kiválasztása
+    const top3Drivers = allDrivers
+      .sort((a, b) => totalPoints[b] - totalPoints[a])
+      .slice(0, 3);
+    
+    // Kumulatív pontok számítása a top 3-nak
+    const cumulativePoints = {};
+    top3Drivers.forEach(driver => {
+      cumulativePoints[driver] = [];
+      let sum = 0;
+      driverPoints[driver].forEach(points => {
+        sum += points;
+        cumulativePoints[driver].push(sum);
+      });
+    });
+    
+    // --- ELSŐ DIAGRAM: Kumulatív pontok ---
+    const datasets = top3Drivers.map(driver => ({
+      label: driver,
+      data: cumulativePoints[driver],
+      borderColor: teamColors[driverTeams[driver]],
+      backgroundColor: teamColors[driverTeams[driver]] + "55",
+      fill: true,
+      tension: 0.3,
+      borderWidth: 3
+    }));
+    
+    new Chart(document.getElementById('pointsChart'), {
+      type: 'line',
+      data: { labels: races, datasets: datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: { mode: 'index', intersect: false },
+          legend: { position: 'top', labels: { font: { size: 16 } } }
+        },
+        interaction: { mode: 'nearest', axis: 'x', intersect: false },
+        scales: { 
+          y: { 
+            title: { display: true, text: 'Kumulatív pontok' }, 
+            beginAtZero: true, 
+            max: 450 
+          } 
         }
+      }
+    });
+    
+    // --- MÁSODIK DIAGRAM: Összpontok ---
+    const sortedDrivers = allDrivers.sort((a, b) => totalPoints[b] - totalPoints[a]);
+    
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: sortedDrivers,
+        datasets: [{
+          label: 'Összpont',
+          data: sortedDrivers.map(d => totalPoints[d]),
+          backgroundColor: sortedDrivers.map(d => teamColors[driverTeams[d]])
+        }]
       },
-      legend:{display:false}
-    },
-    scales:{
-      x:{type:'linear',title:{display:true,text:'Longitude'}},
-      y:{type:'linear',title:{display:true,text:'Latitude'}}
-    }
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: true }
+        },
+        scales: { y: { beginAtZero: true, title: { display: true, text: 'Pont' } } }
+      }
+    });
+    
+    // --- HARMADIK DIAGRAM: Térkép ---
+    const raceWinners = {};
+    races.forEach(race => {
+      const winner = raceData[race].find(r => parseInt(r.points) === 25);
+      if (winner) {
+        raceWinners[race] = winner.driver;
+      }
+    });
+    
+    const mapData = {
+      type: 'FeatureCollection',
+      features: [
+        {type:'Feature',properties:{race:'Australia',winner:raceWinners['Australia']},geometry:{type:'Point',coordinates:[133.88,-25.27]}},
+        {type:'Feature',properties:{race:'China',winner:raceWinners['China']},geometry:{type:'Point',coordinates:[116.38,39.90]}},
+        {type:'Feature',properties:{race:'Japan',winner:raceWinners['Japan']},geometry:{type:'Point',coordinates:[139.69,35.69]}},
+        {type:'Feature',properties:{race:'Bahrain',winner:raceWinners['Bahrain']},geometry:{type:'Point',coordinates:[50.55,26.03]}},
+        {type:'Feature',properties:{race:'Saudi Arabia',winner:raceWinners['Saudi Arabia']},geometry:{type:'Point',coordinates:[39.57,21.61]}},
+        {type:'Feature',properties:{race:'Miami',winner:raceWinners['Miami']},geometry:{type:'Point',coordinates:[-80.19,25.76]}}
+      ]
+    };
+    
+    const ctx = document.getElementById('mapChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bubbleMap',
+      data: {
+        labels: mapData.features.map(f => f.properties.race),
+        datasets: [{
+          label: 'Versenyhelyszínek',
+          data: mapData.features.map(f => ({
+            x: f.geometry.coordinates[0],
+            y: f.geometry.coordinates[1],
+            r: 8,
+            winner: f.properties.winner
+          })),
+          backgroundColor: '#FF0000'
+        }]
+      },
+      options: {
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.raw.winner + " nyerte a " + context.label + " futamot";
+              }
+            }
+          },
+          legend: { display: false }
+        },
+        scales: {
+          x: { type: 'linear', title: { display: true, text: 'Longitude' } },
+          y: { type: 'linear', title: { display: true, text: 'Latitude' } }
+        }
+      }
+    });
+    
+  } catch (error) {
+    console.error('Hiba a CSV betöltése során:', error);
   }
-});
+}
+
+// Adatok betöltése az oldal betöltésekor
+loadData();
 </script>
 </body>
 </html>
