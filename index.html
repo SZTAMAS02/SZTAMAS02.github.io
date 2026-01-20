@@ -13,18 +13,13 @@
 
   <!-- HEADER -->
   <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2026 Évad – Versenyek és Pilóták</h1>
-    <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja</p>
-    <div class="flex gap-3 flex-wrap">
-      <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">Interaktív Chart</span>
-      <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">Tailwind + Chart.js</span>
-      <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">Valós adatok</span>
-    </div>
+    <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2025 Évad – Top 3 Pilóta</h1>
+    <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja (csapat színek)</p>
   </div>
 
-  <!-- LINE CHART: helyezés trend -->
+  <!-- LINE CHART: top 3 pilóta -->
   <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Pilóták helyezés trendjei</h2>
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Top 3 pilóta helyezés trendjei</h2>
     <canvas id="lineChart" height="120"></canvas>
   </div>
 
@@ -37,83 +32,109 @@
 </div>
 
 <script>
-  // --- F1 pontozási rendszer ---
-  const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
+const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
 
-  // --- CSV betöltése ---
-  fetch('data.csv')
-    .then(res => res.text())
-    .then(text => {
-      const rows = text.trim().split('\n');
-      const data = rows.map(r => {
-        const [verseny, hely, piloto] = r.split(',');
-        return { verseny, hely: Number(hely), piloto };
-      });
+// Pilóta → csapat (2025 hivatalos felállás)
+const teamMap = {
+  "Max Verstappen":"Red Bull Racing",
+  "Yuki Tsunoda":"Racing Bulls",
+  "Lando Norris":"McLaren",
+  "Oscar Piastri":"McLaren",
+  "Charles Leclerc":"Ferrari",
+  "Lewis Hamilton":"Ferrari",
+  "George Russell":"Mercedes",
+  "Kimi Antonelli":"Mercedes",
+  "Fernando Alonso":"Aston Martin",
+  "Lance Stroll":"Aston Martin",
+  "Pierre Gasly":"Alpine",
+  "Esteban Ocon":"Haas",
+  "Oliver Bearman":"Haas",
+  "Alexander Albon":"Williams",
+  "Carlos Sainz":"Williams",
+  "Nico Hulkenberg":"Kick Sauber",
+  "Gabriel Bortoleto":"Kick Sauber",
+  "Isack Hadjar":"Racing Bulls",
+  "Liam Lawson":"Racing Bulls"
+};
 
-      // Pilóták és versenyek listája
-      const pilotos = [...new Set(data.map(d => d.piloto))];
-      const versenyek = [...new Set(data.map(d => d.verseny))];
+// Csapat → szín
+const teamColors = {
+  "Ferrari":"#DC0000",
+  "McLaren":"#FF8700",
+  "Red Bull Racing":"#1E41FF",
+  "Mercedes":"#00D2BE",
+  "Aston Martin":"#006F62",
+  "Alpine":"#0090FF",
+  "Haas":"#B6BABD",
+  "Williams":"#37BEDD",
+  "Racing Bulls":"#F4D800",
+  "Kick Sauber":"#000000"
+};
 
-      // --- LINE CHART: helyezések ---
-      const lineDatasets = pilotos.map((p, idx) => {
-        const color = `hsl(${(idx*50)%360},70%,50%)`;
-        return {
-          label: p,
-          data: versenyek.map(v => {
-            const d = data.find(x => x.verseny===v && x.piloto===p);
-            return d ? d.hely : null;
-          }),
-          borderColor: color,
-          backgroundColor: color,
-          fill: false,
-          tension: 0.3,
-          spanGaps: true,
-          pointRadius: 4
-        };
-      });
+// CSV betöltése
+fetch('data.csv')
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.trim().split('\n');
+    const data = rows.map(r => {
+      const [verseny, hely, piloto] = r.split(',');
+      return { verseny, hely: Number(hely), piloto };
+    });
 
-      new Chart(document.getElementById('lineChart'), {
-        type: 'line',
-        data: { labels: versenyek, datasets: lineDatasets },
-        options: {
-          plugins: { tooltip: {mode:'nearest', intersect:false}, legend:{position:'bottom'} },
-          scales: {
-            y: {
-              reverse:true, // 1. hely legyen felül
-              min:1,
-              max:10,
-              title: { display:true, text:'Helyezés' }
-            }
-          }
-        }
-      });
+    const versenyek = [...new Set(data.map(d => d.verseny))];
 
-      // --- BAR CHART: összpontszám ---
-      const pontositas = {};
-      data.forEach(d => {
-        const pont = pointsMap[d.hely] || 0;
-        if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
-        pontositas[d.piloto] += pont;
-      });
+    // --- LINE CHART: top 3 pilóta ---
+    const top3Pilotos = ["Lando Norris","Max Verstappen","George Russell"];
+    const lineDatasets = top3Pilotos.map(p => {
+      const csapat = teamMap[p] || "Williams";
+      const color = teamColors[csapat] || "#888888";
+      return {
+        label: p + " (" + csapat + ")",
+        data: versenyek.map(v => {
+          const d = data.find(x => x.verseny===v && x.piloto===p);
+          return d ? d.hely : null;
+        }),
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+        tension:0.3,
+        spanGaps:true,
+        pointRadius:4
+      };
+    });
 
-      const barPilotos = Object.keys(pontositas);
-      const barPontok = barPilotos.map(p=>pontositas[p]);
-      const barColors = barPilotos.map((_,i)=>`hsl(${(i*50)%360},70%,50%)`);
+    new Chart(document.getElementById('lineChart'), {
+      type:'line',
+      data:{ labels:versenyek, datasets:lineDatasets },
+      options:{
+        plugins:{tooltip:{mode:'nearest',intersect:false}, legend:{position:'bottom'}},
+        scales:{y:{reverse:true,min:1,max:10,title:{display:true,text:'Helyezés'}}}
+      }
+    });
 
-      new Chart(document.getElementById('barChart'), {
-        type: 'bar',
-        data: {
-          labels: barPilotos,
-          datasets: [{ label:'Összpontszám', data: barPontok, backgroundColor: barColors }]
-        },
-        options: {
-          plugins: { legend: { display:false } },
-          scales: { y: { title:{display:true, text:'Pontszám'} } }
-        }
-      });
+    // --- BAR CHART: összpontszám ---
+    const pontositas = {};
+    data.forEach(d => {
+      const pont = pointsMap[d.hely] || 0;
+      if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
+      pontositas[d.piloto] += pont;
+    });
 
-    })
-    .catch(err => console.error("CSV betöltési hiba:", err));
+    const barPilotos = Object.keys(pontositas);
+    const barPontok = barPilotos.map(p=>pontositas[p]);
+    const barColors = barPilotos.map(p=>{
+      const csapat = teamMap[p] || "Williams";
+      return teamColors[csapat] || "#888888";
+    });
+
+    new Chart(document.getElementById('barChart'), {
+      type:'bar',
+      data:{ labels:barPilotos, datasets:[{label:'Összpontszám', data:barPontok, backgroundColor:barColors}] },
+      options:{ plugins:{legend:{display:false}}, scales:{y:{title:{display:true,text:'Pontszám'}}} }
+    });
+
+  })
+  .catch(err => console.error("CSV betöltési hiba:", err));
 </script>
 
 </body>
