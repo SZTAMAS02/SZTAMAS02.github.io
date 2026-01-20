@@ -6,7 +6,8 @@
 <title>F1 2025 Vizualizáció</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@3.6.0"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen p-6">
 
@@ -32,8 +33,10 @@
 
   <!-- TÉRKÉP: Versenyhelyszínek -->
   <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Versenyhelyszínek</h2>
-    <canvas id="mapChart" height="400"></canvas>
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Versenyhelyszínek világtérképen</h2>
+    <div id="mapContainer" style="width: 100%; height: 600px; position: relative;">
+      <svg id="worldMap" width="100%" height="100%"></svg>
+    </div>
   </div>
 
 </div>
@@ -169,59 +172,124 @@ async function loadData() {
       }
     });
     
-    // --- HARMADIK DIAGRAM: Térkép ---
+    // --- HARMADIK DIAGRAM: Világtérkép ---
+    const raceLocations = {
+      'Australia': { coords: [133.88, -25.27], city: 'Melbourne' },
+      'China': { coords: [121.47, 31.23], city: 'Shanghai' },
+      'Japan': { coords: [136.53, 34.84], city: 'Suzuka' },
+      'Bahrain': { coords: [50.51, 26.03], city: 'Sakhir' },
+      'Saudi Arabia': { coords: [39.10, 21.63], city: 'Jeddah' },
+      'Miami': { coords: [-80.24, 25.96], city: 'Miami' },
+      'Emilia Romagna': { coords: [11.71, 44.34], city: 'Imola' },
+      'Monaco': { coords: [7.42, 43.73], city: 'Monte Carlo' },
+      'Spain': { coords: [2.26, 41.57], city: 'Barcelona' },
+      'Canada': { coords: [-73.52, 45.50], city: 'Montreal' },
+      'Austria': { coords: [14.76, 47.22], city: 'Spielberg' },
+      'Great Britain': { coords: [-1.02, 52.07], city: 'Silverstone' },
+      'Belgium': { coords: [5.97, 50.44], city: 'Spa-Francorchamps' },
+      'Hungary': { coords: [19.25, 47.58], city: 'Budapest' },
+      'Netherlands': { coords: [4.54, 52.39], city: 'Zandvoort' },
+      'Italy': { coords: [9.29, 45.62], city: 'Monza' },
+      'Azerbaijan': { coords: [49.85, 40.37], city: 'Baku' },
+      'Singapore': { coords: [103.86, 1.29], city: 'Marina Bay' },
+      'United States': { coords: [-97.64, 30.13], city: 'Austin' },
+      'Mexico': { coords: [-99.09, 19.40], city: 'Mexico City' },
+      'Brazil': { coords: [-46.70, -23.70], city: 'São Paulo' },
+      'Las Vegas': { coords: [-115.17, 36.11], city: 'Las Vegas' },
+      'Qatar': { coords: [51.45, 25.49], city: 'Lusail' },
+      'Abu Dhabi': { coords: [54.60, 24.47], city: 'Yas Island' }
+    };
+
     const raceWinners = {};
     races.forEach(race => {
-      const winner = raceData[race].find(r => parseInt(r.points) === 25);
-      if (winner) {
-        raceWinners[race] = winner.driver;
-      }
-    });
-    
-    const mapData = {
-      type: 'FeatureCollection',
-      features: [
-        {type:'Feature',properties:{race:'Australia',winner:raceWinners['Australia']},geometry:{type:'Point',coordinates:[133.88,-25.27]}},
-        {type:'Feature',properties:{race:'China',winner:raceWinners['China']},geometry:{type:'Point',coordinates:[116.38,39.90]}},
-        {type:'Feature',properties:{race:'Japan',winner:raceWinners['Japan']},geometry:{type:'Point',coordinates:[139.69,35.69]}},
-        {type:'Feature',properties:{race:'Bahrain',winner:raceWinners['Bahrain']},geometry:{type:'Point',coordinates:[50.55,26.03]}},
-        {type:'Feature',properties:{race:'Saudi Arabia',winner:raceWinners['Saudi Arabia']},geometry:{type:'Point',coordinates:[39.57,21.61]}},
-        {type:'Feature',properties:{race:'Miami',winner:raceWinners['Miami']},geometry:{type:'Point',coordinates:[-80.19,25.76]}}
-      ]
-    };
-    
-    const ctx = document.getElementById('mapChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bubbleMap',
-      data: {
-        labels: mapData.features.map(f => f.properties.race),
-        datasets: [{
-          label: 'Versenyhelyszínek',
-          data: mapData.features.map(f => ({
-            x: f.geometry.coordinates[0],
-            y: f.geometry.coordinates[1],
-            r: 8,
-            winner: f.properties.winner
-          })),
-          backgroundColor: '#FF0000'
-        }]
-      },
-      options: {
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.raw.winner + " nyerte a " + context.label + " futamot";
-              }
-            }
-          },
-          legend: { display: false }
-        },
-        scales: {
-          x: { type: 'linear', title: { display: true, text: 'Longitude' } },
-          y: { type: 'linear', title: { display: true, text: 'Latitude' } }
+      const raceName = race.replace(' Sprint', '');
+      if (!raceWinners[raceName]) {
+        const winner = raceData[race].find(r => parseInt(r.points) === 25 || parseInt(r.points) === 8);
+        if (winner) {
+          raceWinners[raceName] = winner.driver;
         }
       }
+    });
+
+    // D3.js világtérkép létrehozása
+    const width = document.getElementById('mapContainer').offsetWidth;
+    const height = 600;
+
+    const svg = d3.select('#worldMap')
+      .attr('width', width)
+      .attr('height', height);
+
+    const projection = d3.geoMercator()
+      .scale(width / 6.5)
+      .translate([width / 2, height / 1.5]);
+
+    const path = d3.geoPath().projection(projection);
+
+    // Világtérkép betöltése
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world => {
+      const countries = topojson.feature(world, world.objects.countries);
+
+      // Országok rajzolása
+      svg.append('g')
+        .selectAll('path')
+        .data(countries.features)
+        .enter()
+        .append('path')
+        .attr('d', path)
+        .attr('fill', '#e0e0e0')
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', 0.5);
+
+      // Versenyhelyszínek pontjai
+      Object.keys(raceLocations).forEach(race => {
+        if (raceWinners[race]) {
+          const location = raceLocations[race];
+          const coords = projection(location.coords);
+
+          // Pont
+          const circle = svg.append('circle')
+            .attr('cx', coords[0])
+            .attr('cy', coords[1])
+            .attr('r', 8)
+            .attr('fill', '#DC0000')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 2)
+            .style('cursor', 'pointer')
+            .on('mouseover', function(event) {
+              d3.select(this)
+                .transition()
+                .duration(200)
+                .attr('r', 12);
+              
+              tooltip.style('opacity', 1)
+                .html(`<strong>${race}</strong><br/>${location.city}<br/>Győztes: ${raceWinners[race]}`)
+                .style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 10) + 'px');
+            })
+            .on('mouseout', function() {
+              d3.select(this)
+                .transition()
+                .duration(200)
+                .attr('r', 8);
+              
+              tooltip.style('opacity', 0);
+            });
+        }
+      });
+
+      // Tooltip létrehozása
+      const tooltip = d3.select('body')
+        .append('div')
+        .style('position', 'absolute')
+        .style('background', 'rgba(0, 0, 0, 0.8)')
+        .style('color', 'white')
+        .style('padding', '10px 15px')
+        .style('border-radius', '8px')
+        .style('font-size', '14px')
+        .style('pointer-events', 'none')
+        .style('opacity', 0)
+        .style('transition', 'opacity 0.2s')
+        .style('z-index', '1000');
     });
     
   } catch (error) {
