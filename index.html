@@ -1,141 +1,111 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>F1 2025 Évad Vizualizáció</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 2025 Pont Trend</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 min-h-screen p-6">
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- HEADER -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+      <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2025 Pont Trend</h1>
+      <p class="text-2xl text-gray-600 mb-4">Első 3 pilóta pont alakulása</p>
+    </div>
 
-<div class="max-w-7xl mx-auto">
-
-  <!-- HEADER -->
-  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2025 Évad – Top 3 Pilóta</h1>
-    <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja (csapat színek)</p>
+    <!-- AREA CHART -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Pont trend versenyről versenyre</h2>
+      <canvas id="pointsChart" height="120"></canvas>
+    </div>
   </div>
 
-  <!-- LINE CHART: top 3 pilóta -->
-  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Top 3 pilóta helyezés trendjei</h2>
-    <canvas id="lineChart" height="120"></canvas>
-  </div>
+  <script>
+    // Csapatszínek a pilótákhoz
+    const teamColors = {
+      "McLaren": "#FF8700",       // Narancs
+      "Red Bull Racing": "#0033A0", // Sötét kék
+      "Ferrari": "#DC0000",       // Piros
+      "Mercedes": "#00D2BE",      // Világos zöld
+      "Williams": "#005AFF",      // Világos kék
+      "Aston Martin": "#006F62",  // Zöld
+      "Kick Sauber": "#FFD700",   // Arany
+      "Racing Bulls": "#6699FF",  // Világos kék
+      "Haas F1 Team": "#B6BABD",  // Szürke
+      "Alpine": "#0090FF"         // Kék
+    };
 
-  <!-- BAR CHART: összpontszám -->
-  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Összpontszám pilótánként</h2>
-    <canvas id="barChart" height="120"></canvas>
-  </div>
+    // Csak az első 3 pilóta
+    const drivers = ["Lando Norris","Max Verstappen","Oscar Piastri"];
+    const driverTeams = {
+      "Lando Norris":"McLaren",
+      "Max Verstappen":"Red Bull Racing",
+      "Oscar Piastri":"McLaren"
+    };
 
-</div>
+    // Pontok versenyek szerint (CSV-ből átkonvertálva)
+    const races = [
+      "Australia","China","China Sprint","Japan","Bahrain","Saudi Arabia",
+      "Miami Sprint","Miami","Emilia Romagna","Monaco","Spain","Canada",
+      "Austria","Great Britain","Belgium Sprint","Belgium","Hungary","Netherlands",
+      "Italy","Azerbaijan","Singapore","United States Sprint","United States",
+      "Mexico","Brazil Sprint","Brazil","Las Vegas","Qatar Sprint","Qatar","Abu Dhabi"
+    ];
 
-<script>
-const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
+    // Pontok sorban a versenyekhez, csak az első 3 pilóta
+    const points = {
+      "Lando Norris":[25,18,1,18,15,18,8,18,18,25,18,18,25,25,1,18,25,18,18,15,18,2,18,25,8,25,18,1,18,18],
+      "Max Verstappen":[18,15,6,25,10,18,5,25,25,18,10,18,9,18,8,25,9,18,25,25,15,8,18,15,5,25,25,4,25,25],
+      "Oscar Piastri":[15,25,7,15,25,25,6,25,15,15,25,15,18,25,7,25,18,25,15,18,12,7,25,5,6,18,15,2,15,25]
+    };
 
-// Pilóta → csapat (2025 hivatalos felállás)
-const teamMap = {
-  "Max Verstappen":"Red Bull Racing",
-  "Yuki Tsunoda":"Racing Bulls",
-  "Lando Norris":"McLaren",
-  "Oscar Piastri":"McLaren",
-  "Charles Leclerc":"Ferrari",
-  "Lewis Hamilton":"Ferrari",
-  "George Russell":"Mercedes",
-  "Kimi Antonelli":"Mercedes",
-  "Fernando Alonso":"Aston Martin",
-  "Lance Stroll":"Aston Martin",
-  "Pierre Gasly":"Alpine",
-  "Esteban Ocon":"Haas",
-  "Oliver Bearman":"Haas",
-  "Alexander Albon":"Williams",
-  "Carlos Sainz":"Williams",
-  "Nico Hulkenberg":"Kick Sauber",
-  "Gabriel Bortoleto":"Kick Sauber",
-  "Isack Hadjar":"Racing Bulls",
-  "Liam Lawson":"Racing Bulls"
-};
+    // Dataset létrehozása Chart.js-hez
+    const datasets = drivers.map(driver => ({
+      label: driver,
+      data: points[driver],
+      borderColor: teamColors[driverTeams[driver]],
+      backgroundColor: teamColors[driverTeams[driver]]+"55",
+      fill: true,
+      tension: 0.3
+    }));
 
-// Csapat → szín
-const teamColors = {
-  "Ferrari":"#DC0000",
-  "McLaren":"#FF8700",
-  "Red Bull Racing":"#1E41FF",
-  "Mercedes":"#00D2BE",
-  "Aston Martin":"#006F62",
-  "Alpine":"#0090FF",
-  "Haas":"#B6BABD",
-  "Williams":"#37BEDD",
-  "Racing Bulls":"#F4D800",
-  "Kick Sauber":"#000000"
-};
-
-// CSV betöltése
-fetch('data.csv')
-  .then(res => res.text())
-  .then(text => {
-    const rows = text.trim().split('\n');
-    const data = rows.map(r => {
-      const [verseny, hely, piloto] = r.split(',');
-      return { verseny, hely: Number(hely), piloto };
-    });
-
-    const versenyek = [...new Set(data.map(d => d.verseny))];
-
-    // --- LINE CHART: top 3 pilóta ---
-    const top3Pilotos = ["Lando Norris","Max Verstappen","George Russell"];
-    const lineDatasets = top3Pilotos.map(p => {
-      const csapat = teamMap[p] || "Williams";
-      const color = teamColors[csapat] || "#888888";
-      return {
-        label: p + " (" + csapat + ")",
-        data: versenyek.map(v => {
-          const d = data.find(x => x.verseny===v && x.piloto===p);
-          return d ? d.hely : null;
-        }),
-        borderColor: color,
-        backgroundColor: color,
-        fill: false,
-        tension:0.3,
-        spanGaps:true,
-        pointRadius:4
-      };
-    });
-
-    new Chart(document.getElementById('lineChart'), {
-      type:'line',
-      data:{ labels:versenyek, datasets:lineDatasets },
-      options:{
-        plugins:{tooltip:{mode:'nearest',intersect:false}, legend:{position:'bottom'}},
-        scales:{y:{reverse:true,min:1,max:10,title:{display:true,text:'Helyezés'}}}
+    // Chart
+    new Chart(document.getElementById('pointsChart'), {
+      type: 'line',
+      data: {
+        labels: races,
+        datasets: datasets
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            mode: 'index',
+            intersect: false
+          },
+          legend: {
+            position: 'top',
+            labels: {
+              font: { size: 16 }
+            }
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        },
+        scales: {
+          y: {
+            title: { display: true, text: 'Pontok' },
+            beginAtZero: true
+          }
+        }
       }
     });
-
-    // --- BAR CHART: összpontszám ---
-    const pontositas = {};
-    data.forEach(d => {
-      const pont = pointsMap[d.hely] || 0;
-      if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
-      pontositas[d.piloto] += pont;
-    });
-
-    const barPilotos = Object.keys(pontositas);
-    const barPontok = barPilotos.map(p=>pontositas[p]);
-    const barColors = barPilotos.map(p=>{
-      const csapat = teamMap[p] || "Williams";
-      return teamColors[csapat] || "#888888";
-    });
-
-    new Chart(document.getElementById('barChart'), {
-      type:'bar',
-      data:{ labels:barPilotos, datasets:[{label:'Összpontszám', data:barPontok, backgroundColor:barColors}] },
-      options:{ plugins:{legend:{display:false}}, scales:{y:{title:{display:true,text:'Pontszám'}}} }
-    });
-
-  })
-  .catch(err => console.error("CSV betöltési hiba:", err));
-</script>
-
+  </script>
 </body>
 </html>
