@@ -1,125 +1,134 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8">
-<title>F1 2023 – Szezon Elemzés</title>
-
-<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-<style>
-body {
-  background: #000;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-.card {
-  background: white;
-  color: black;
-  padding: 20px;
-  margin-bottom: 30px;
-  border-radius: 12px;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 2026 Évad Vizualizáció</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
 
-<body>
+    <!-- HEADER -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+      <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2026 Évad – Versenyek és Pilóták</h1>
+      <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja</p>
+      <div class="flex gap-3 flex-wrap">
+        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">Interaktív Chart</span>
+        <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">Tailwind + Chart.js</span>
+        <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">Valós adatok</span>
+      </div>
+    </div>
 
-<h1>Formula 1 2023 – F1 Fan Elemzés</h1>
+    <!-- LINE CHART: Helyezés trendek -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Pilóták helyezés trendjei</h2>
+      <canvas id="lineChart" height="120"></canvas>
+    </div>
 
-<div class="card">
-  <h2>Z-score – összpontszám</h2>
-  <div id="zscore"></div>
-</div>
+    <!-- BAR CHART: Összpontszám -->
+    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Összpontszám pilótánként</h2>
+      <canvas id="barChart" height="120"></canvas>
+    </div>
 
-<div class="card">
-  <h2>Dobogós helyezések száma</h2>
-  <div id="podiums"></div>
-</div>
+  </div>
 
-<div class="card">
-  <h2>Átlagos célba érési helyezés</h2>
-  <div id="avgpos"></div>
-</div>
+  <script>
+    // --- Példaadat: a CSV-t ide lehet konvertálni JSON-ba ---
+    const data = [
+      {verseny:"Australia", hely:1, piloto:"Lando Norris"},
+      {verseny:"Australia", hely:2, piloto:"Max Verstappen"},
+      {verseny:"Australia", hely:3, piloto:"George Russell"},
+      {verseny:"China", hely:1, piloto:"Oscar Piastri"},
+      {verseny:"China", hely:2, piloto:"Lando Norris"},
+      {verseny:"China", hely:3, piloto:"George Russell"},
+      {verseny:"Japan", hely:1, piloto:"Max Verstappen"},
+      {verseny:"Japan", hely:2, piloto:"Lando Norris"},
+      {verseny:"Japan", hely:3, piloto:"Oscar Piastri"},
+      // ... ide jön az összes többi sor a CSV-ből
+    ];
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+    // --- Pontozási rendszer F1 szerint ---
+    const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
 
-const data = [
-  {Race:"Bahrain",Driver:"Verstappen",Points:25,Position:1},
-  {Race:"Bahrain",Driver:"Perez",Points:18,Position:2},
-  {Race:"Bahrain",Driver:"Alonso",Points:15,Position:3},
+    // --- Pilóták listája ---
+    const pilotos = [...new Set(data.map(d=>d.piloto))];
 
-  {Race:"Saudi Arabia",Driver:"Verstappen",Points:25,Position:1},
-  {Race:"Saudi Arabia",Driver:"Perez",Points:18,Position:2},
-  {Race:"Saudi Arabia",Driver:"Alonso",Points:15,Position:3},
+    // --- Versenyek listája kronológiai sorrendben ---
+    const versenyek = [...new Set(data.map(d=>d.verseny))];
 
-  {Race:"Australia",Driver:"Verstappen",Points:25,Position:1},
-  {Race:"Australia",Driver:"Hamilton",Points:18,Position:2},
-  {Race:"Australia",Driver:"Alonso",Points:15,Position:3},
+    // --- LINE CHART: helyezések ---
+    const lineDatasets = pilotos.map((p, idx) => {
+      const color = `hsl(${(idx*50)%360},70%,50%)`;
+      return {
+        label: p,
+        data: versenyek.map(v => {
+          const d = data.find(x=>x.verseny===v && x.piloto===p);
+          return d ? d.hely : null;
+        }),
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+        tension:0.3,
+        spanGaps:true,
+        pointRadius:4
+      }
+    });
 
-  {Race:"Monaco",Driver:"Verstappen",Points:25,Position:1},
-  {Race:"Monaco",Driver:"Alonso",Points:18,Position:2},
-  {Race:"Monaco",Driver:"Ocon",Points:15,Position:3}
-];
+    new Chart(document.getElementById('lineChart'), {
+      type: 'line',
+      data: {
+        labels: versenyek,
+        datasets: lineDatasets
+      },
+      options: {
+        plugins: {
+          tooltip: {mode:'nearest', intersect:false},
+          legend: {position:'bottom'}
+        },
+        scales: {
+          y: {
+            title: {display:true, text:'Helyezés'},
+            reverse:true, // 1. hely legyen felül
+            min:1,
+            max:10
+          }
+        }
+      }
+    });
 
-// ---------- Z-SCORE ----------
-vegaEmbed("#zscore", {
-  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 300,
-  "data":{"values":data},
-  "transform":[
-    {"aggregate":[{"op":"sum","field":"Points","as":"Total"}],"groupby":["Driver"]},
-    {"joinaggregate":[
-      {"op":"mean","field":"Total","as":"meanP"},
-      {"op":"stdev","field":"Total","as":"stdP"}
-    ]},
-    {"calculate":"(datum.Total-datum.meanP)/datum.stdP","as":"Z"}
-  ],
-  "mark":"bar",
-  "encoding":{
-    "x":{"field":"Driver","type":"nominal","sort":"-y"},
-    "y":{"field":"Z","type":"quantitative","title":"Z-score"},
-    "color":{"field":"Z","type":"quantitative","scale":{"scheme":"redblue","domainMid":0}}
-  }
-},{actions:false});
+    // --- BAR CHART: összpontszám ---
+    const pontositas = {};
+    data.forEach(d => {
+      const pont = pointsMap[d.hely] || 0;
+      if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
+      pontositas[d.piloto] += pont;
+    });
 
-// ---------- PODIUMS ----------
-vegaEmbed("#podiums", {
-  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 300,
-  "data":{"values":data},
-  "transform":[{"filter":"datum.Position <= 3"}],
-  "mark":"bar",
-  "encoding":{
-    "x":{"field":"Driver","type":"nominal"},
-    "y":{"aggregate":"count","title":"Dobogók száma"},
-    "color":{"field":"Driver","type":"nominal"}
-  }
-},{actions:false});
+    const barPilotos = Object.keys(pontositas);
+    const barPontok = barPilotos.map(p=>pontositas[p]);
+    const barColors = barPilotos.map((_,i)=>`hsl(${(i*50)%360},70%,50%)`);
 
-// ---------- AVG POSITION ----------
-vegaEmbed("#avgpos", {
-  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 600,
-  "height": 300,
-  "data":{"values":data},
-  "transform":[
-    {"aggregate":[{"op":"mean","field":"Position","as":"AvgPos"}],"groupby":["Driver"]}
-  ],
-  "mark":"bar",
-  "encoding":{
-    "x":{"field":"Driver","type":"nominal","sort":"y"},
-    "y":{"field":"AvgPos","title":"Átlagos helyezés"},
-    "color":{"field":"AvgPos","type":"quantitative","scale":{"scheme":"reds"}}
-  }
-},{actions:false});
+    new Chart(document.getElementById('barChart'), {
+      type:'bar',
+      data:{
+        labels: barPilotos,
+        datasets:[{
+          label:'Összpontszám',
+          data: barPontok,
+          backgroundColor: barColors
+        }]
+      },
+      options:{
+        plugins:{legend:{display:false}},
+        scales:{
+          y:{title:{display:true, text:'Pontszám'}}
+        }
+      }
+    });
 
-});
-</script>
-
+  </script>
 </body>
 </html>
