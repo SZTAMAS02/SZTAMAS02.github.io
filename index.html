@@ -1,131 +1,101 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 Performance Analytics - 2023</title>
+  <meta charset="UTF-8">
+  <title>F1 2025 Performance Tracker</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen p-6 font-sans">
-  <div class="max-w-7xl mx-auto">
-    
-    <div class="bg-slate-800 rounded-2xl shadow-2xl p-8 mb-8 border-b-4 border-red-600">
-      <h1 class="text-5xl font-extrabold mb-3 tracking-tight">F1 <span class="text-red-600">Performance</span> Analytics</h1>
-      <p class="text-2xl text-slate-400 mb-4">2023-as Szezon: Pilóták teljesítményének Z-score alapú elemzése</p>
-      <div class="flex gap-3">
-        <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest">Live Data</span>
-        <span class="bg-slate-700 text-slate-300 px-4 py-2 rounded-full text-sm font-semibold">Vega-Lite Engine</span>
-      </div>
-    </div>
+<body class="bg-[#0b0e14] text-white font-sans p-4">
 
-    <div class="grid md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
-        <p class="text-slate-400 font-medium">Összesített adatpont</p>
-        <h3 class="text-4xl font-bold mt-2">~1,050</h3>
-        <p class="text-xs text-green-400 mt-2">Köridők és szektoridők alapján</p>
+  <div class="max-w-6xl mx-auto">
+    <header class="mb-10 p-8 bg-gradient-to-r from-red-900/40 to-slate-900 rounded-3xl border border-red-500/30">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-5xl font-black italic tracking-tighter uppercase">F1 <span class="text-red-600">2025</span></h1>
+          <p class="text-slate-400 font-light text-lg mt-1 underline decoration-red-600/50">Szezonközi Z-Score Teljesítmény Analitika</p>
+        </div>
+        <div class="hidden md:block text-right text-xs font-mono text-slate-500">
+          STATUS: LIVE DATA STREAM<br>SOURCE: DATA.CSV
+        </div>
       </div>
-      <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
-        <p class="text-slate-400 font-medium">Fő Metrika</p>
-        <h3 class="text-4xl font-bold mt-2 text-red-500">Z-Score</h3>
-        <p class="text-xs text-slate-400 mt-2">Relatív teljesítmény az átlaghoz képest</p>
-      </div>
-      <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
-        <p class="text-slate-400 font-medium">Célközönség</p>
-        <h3 class="text-4xl font-bold mt-2 italic">Menedzsment</h3>
-        <p class="text-xs text-blue-400 mt-2">Döntéstámogató vizualizáció</p>
-      </div>
-    </div>
+    </header>
 
-    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8 min-h-[500px]">
+    <main class="bg-white rounded-3xl p-6 shadow-[0_0_50px_rgba(220,38,38,0.15)] overflow-hidden">
       <div id="vis" class="w-full"></div>
-    </div>
+    </main>
 
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="bg-slate-800 p-8 rounded-2xl shadow-xl border-l-8 border-red-600">
-        <h3 class="text-2xl font-bold mb-4 text-red-500 underline underline-offset-8">Módszertani Elemzés</h3>
-        <p class="text-slate-300 leading-relaxed mb-4">
-          A vizualizáció a pilóták pontszámait és helyezéseit veti össze. Az adatok <strong>Z-score normalizáláson</strong> estek át, ami megmutatja, hány szórásnyi távolságra van egy pilóta az átlagtól.
-        </p>
-        <ul class="text-sm text-slate-400 space-y-2">
-          <li>• <strong>0 feletti érték:</strong> Átlag feletti teljesítmény</li>
-          <li>• <strong>0 alatti érték:</strong> Átlag alatti teljesítmény</li>
-          <li>• <strong>Interaktivitás:</strong> Szűrés csapatok alapján</li>
-        </ul>
+    <section class="mt-10 grid md:grid-cols-3 gap-6">
+      <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+        <h3 class="text-red-500 font-bold mb-2 uppercase text-sm italic">Adatstruktúra</h3>
+        <p class="text-slate-400 text-xs">Sor alapú (Tidy) formátum. A <code>data.csv</code> tartalmazza a futamokat, pilótákat és átlagos köridőket (~1000+ rekord).</p>
       </div>
-      <div class="bg-slate-800 p-8 rounded-2xl shadow-xl">
-        <h3 class="text-2xl font-bold mb-4">Üzleti Érték (Menedzsment)</h3>
-        <p class="text-slate-300">
-          A befektetők számára ez a nézet rávilágít az "alulértékelt" versenyzőkre, akiknél a pontszám (Z-score) és a megszerzett helyezés korrelációja eltér a piaci trendtől.
-        </p>
+      <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+        <h3 class="text-red-500 font-bold mb-2 uppercase text-sm italic">Normalizálás</h3>
+        <p class="text-slate-400 text-xs">Z-Score kiszámítása: $z = \frac{x - \mu}{\sigma}$. Ez mutatja meg a pilóták konzisztenciáját a mezőnyhöz képest.</p>
       </div>
-    </div>
+      <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+        <h3 class="text-red-500 font-bold mb-2 uppercase text-sm italic">Célközönség</h3>
+        <p class="text-slate-400 text-xs">Középmenedzsment / Befektetők: Stratégiai döntéshozatal a versenyzői hatékonyság alapján.</p>
+      </div>
+    </section>
   </div>
 
   <script>
-    // Vega-Lite specifikáció
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "description": "F1 2023 Driver Performance Z-Score",
       "width": "container",
       "height": 400,
-      "data": {
-        "url": "https://raw.githubusercontent.com/jhellings1/F1-Database/main/f1db-csv/results.csv" // Valós F1 CSV adatforrás
-      },
+      "background": "transparent",
+      "data": { "url": "data.csv" },
       "transform": [
-        {"filter": "datum.raceId >= 1098"}, // Csak a 2023-as szezon
         {
-          "aggregate": [{"op": "sum", "field": "points", "as": "total_points"}],
-          "groupby": ["driverId"]
+          "aggregate": [{"op": "mean", "field": "LapTime_Avg", "as": "SeasonAvg"}],
+          "groupby": ["Driver", "Team"]
         },
         {
           "window": [
-            {"op": "mean", "field": "total_points", "as": "avg_points"},
-            {"op": "stdev", "field": "total_points", "as": "std_points"}
+            {"op": "mean", "field": "SeasonAvg", "as": "GlobalAvg"},
+            {"op": "stdev", "field": "SeasonAvg", "as": "GlobalStd"}
           ]
         },
         {
-          "calculate": "(datum.total_points - datum.avg_points) / datum.std_points",
+          "calculate": "(datum.SeasonAvg - datum.GlobalAvg) / datum.GlobalStd",
           "as": "z_score"
         }
       ],
-      "layer": [
-        {
-          "mark": {"type": "bar", "cornerRadiusEnd": 4},
-          "encoding": {
-            "x": {
-              "field": "driverId", 
-              "type": "nominal", 
-              "sort": "-y", 
-              "title": "Pilóta ID"
-            },
-            "y": {
-              "field": "z_score", 
-              "type": "quantitative", 
-              "title": "Teljesítmény (Z-Score)"
-            },
-            "color": {
-              "field": "z_score",
-              "type": "quantitative",
-              "scale": {"scheme": "redblue", "domainMid": 0}
-            },
-            "tooltip": [
-              {"field": "driverId", "title": "Pilóta"},
-              {"field": "total_points", "title": "Összes pont"},
-              {"field": "z_score", "title": "Z-Score", "format": ".2f"}
-            ]
-          }
+      "mark": {"type": "bar", "cornerRadiusTop": 10, "tooltip": true},
+      "encoding": {
+        "x": {
+          "field": "Driver", 
+          "type": "nominal", 
+          "sort": "y", 
+          "title": "Versenyző",
+          "axis": {"labelAngle": -45, "labelColor": "#64748b"}
         },
-        {
-          "mark": {"type": "rule", "color": "black", "strokeDash": [4,4]},
-          "encoding": {"y": {"datum": 0}}
-        }
-      ],
+        "y": {
+          "field": "z_score", 
+          "type": "quantitative", 
+          "title": "Z-Score (Relatív Gyorsaság)",
+          "axis": {"grid": true, "gridDash": [2,2]}
+        },
+        "color": {
+          "field": "z_score",
+          "type": "quantitative",
+          "scale": {"scheme": "redblue", "reverse": true},
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "Driver", "title": "Pilóta"},
+          {"field": "Team", "title": "Csapat"},
+          {"field": "z_score", "title": "Z-Score", "format": ".2f"}
+        ]
+      },
       "config": {
         "view": {"stroke": "transparent"},
-        "axis": {"labelFont": "Inter", "titleFont": "Inter"}
+        "axis": {"domain": false, "ticks": false}
       }
     };
 
