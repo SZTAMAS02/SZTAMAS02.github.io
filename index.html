@@ -1,134 +1,120 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 2026 Évad Vizualizáció</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F1 2025 Évad Vizualizáció</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 min-h-screen p-6">
-  <div class="max-w-7xl mx-auto">
 
-    <!-- HEADER -->
-    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-      <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2026 Évad – Versenyek és Pilóták</h1>
-      <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja</p>
-      <div class="flex gap-3 flex-wrap">
-        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">Interaktív Chart</span>
-        <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">Tailwind + Chart.js</span>
-        <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">Valós adatok</span>
-      </div>
+<div class="max-w-7xl mx-auto">
+
+  <!-- HEADER -->
+  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+    <h1 class="text-5xl font-bold text-gray-800 mb-3">F1 2026 Évad – Versenyek és Pilóták</h1>
+    <p class="text-2xl text-gray-600 mb-4">Helyezések és összpontszámok vizualizációja</p>
+    <div class="flex gap-3 flex-wrap">
+      <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">Interaktív Chart</span>
+      <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">Tailwind + Chart.js</span>
+      <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">Valós adatok</span>
     </div>
-
-    <!-- LINE CHART: Helyezés trendek -->
-    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-      <h2 class="text-3xl font-bold text-gray-800 mb-6">Pilóták helyezés trendjei</h2>
-      <canvas id="lineChart" height="120"></canvas>
-    </div>
-
-    <!-- BAR CHART: Összpontszám -->
-    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-      <h2 class="text-3xl font-bold text-gray-800 mb-6">Összpontszám pilótánként</h2>
-      <canvas id="barChart" height="120"></canvas>
-    </div>
-
   </div>
 
-  <script>
-    // --- Példaadat: a CSV-t ide lehet konvertálni JSON-ba ---
-    const data = [
-      {verseny:"Australia", hely:1, piloto:"Lando Norris"},
-      {verseny:"Australia", hely:2, piloto:"Max Verstappen"},
-      {verseny:"Australia", hely:3, piloto:"George Russell"},
-      {verseny:"China", hely:1, piloto:"Oscar Piastri"},
-      {verseny:"China", hely:2, piloto:"Lando Norris"},
-      {verseny:"China", hely:3, piloto:"George Russell"},
-      {verseny:"Japan", hely:1, piloto:"Max Verstappen"},
-      {verseny:"Japan", hely:2, piloto:"Lando Norris"},
-      {verseny:"Japan", hely:3, piloto:"Oscar Piastri"},
-      // ... ide jön az összes többi sor a CSV-ből
-    ];
+  <!-- LINE CHART: helyezés trend -->
+  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Pilóták helyezés trendjei</h2>
+    <canvas id="lineChart" height="120"></canvas>
+  </div>
 
-    // --- Pontozási rendszer F1 szerint ---
-    const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
+  <!-- BAR CHART: összpontszám -->
+  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Összpontszám pilótánként</h2>
+    <canvas id="barChart" height="120"></canvas>
+  </div>
 
-    // --- Pilóták listája ---
-    const pilotos = [...new Set(data.map(d=>d.piloto))];
+</div>
 
-    // --- Versenyek listája kronológiai sorrendben ---
-    const versenyek = [...new Set(data.map(d=>d.verseny))];
+<script>
+  // --- F1 pontozási rendszer ---
+  const pointsMap = {1:25,2:18,3:15,4:12,5:10,6:8,7:6,8:4,9:2,10:1};
 
-    // --- LINE CHART: helyezések ---
-    const lineDatasets = pilotos.map((p, idx) => {
-      const color = `hsl(${(idx*50)%360},70%,50%)`;
-      return {
-        label: p,
-        data: versenyek.map(v => {
-          const d = data.find(x=>x.verseny===v && x.piloto===p);
-          return d ? d.hely : null;
-        }),
-        borderColor: color,
-        backgroundColor: color,
-        fill: false,
-        tension:0.3,
-        spanGaps:true,
-        pointRadius:4
-      }
-    });
+  // --- CSV betöltése ---
+  fetch('data.csv')
+    .then(res => res.text())
+    .then(text => {
+      const rows = text.trim().split('\n');
+      const data = rows.map(r => {
+        const [verseny, hely, piloto] = r.split(',');
+        return { verseny, hely: Number(hely), piloto };
+      });
 
-    new Chart(document.getElementById('lineChart'), {
-      type: 'line',
-      data: {
-        labels: versenyek,
-        datasets: lineDatasets
-      },
-      options: {
-        plugins: {
-          tooltip: {mode:'nearest', intersect:false},
-          legend: {position:'bottom'}
-        },
-        scales: {
-          y: {
-            title: {display:true, text:'Helyezés'},
-            reverse:true, // 1. hely legyen felül
-            min:1,
-            max:10
+      // Pilóták és versenyek listája
+      const pilotos = [...new Set(data.map(d => d.piloto))];
+      const versenyek = [...new Set(data.map(d => d.verseny))];
+
+      // --- LINE CHART: helyezések ---
+      const lineDatasets = pilotos.map((p, idx) => {
+        const color = `hsl(${(idx*50)%360},70%,50%)`;
+        return {
+          label: p,
+          data: versenyek.map(v => {
+            const d = data.find(x => x.verseny===v && x.piloto===p);
+            return d ? d.hely : null;
+          }),
+          borderColor: color,
+          backgroundColor: color,
+          fill: false,
+          tension: 0.3,
+          spanGaps: true,
+          pointRadius: 4
+        };
+      });
+
+      new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: { labels: versenyek, datasets: lineDatasets },
+        options: {
+          plugins: { tooltip: {mode:'nearest', intersect:false}, legend:{position:'bottom'} },
+          scales: {
+            y: {
+              reverse:true, // 1. hely legyen felül
+              min:1,
+              max:10,
+              title: { display:true, text:'Helyezés' }
+            }
           }
         }
-      }
-    });
+      });
 
-    // --- BAR CHART: összpontszám ---
-    const pontositas = {};
-    data.forEach(d => {
-      const pont = pointsMap[d.hely] || 0;
-      if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
-      pontositas[d.piloto] += pont;
-    });
+      // --- BAR CHART: összpontszám ---
+      const pontositas = {};
+      data.forEach(d => {
+        const pont = pointsMap[d.hely] || 0;
+        if(!pontositas[d.piloto]) pontositas[d.piloto] = 0;
+        pontositas[d.piloto] += pont;
+      });
 
-    const barPilotos = Object.keys(pontositas);
-    const barPontok = barPilotos.map(p=>pontositas[p]);
-    const barColors = barPilotos.map((_,i)=>`hsl(${(i*50)%360},70%,50%)`);
+      const barPilotos = Object.keys(pontositas);
+      const barPontok = barPilotos.map(p=>pontositas[p]);
+      const barColors = barPilotos.map((_,i)=>`hsl(${(i*50)%360},70%,50%)`);
 
-    new Chart(document.getElementById('barChart'), {
-      type:'bar',
-      data:{
-        labels: barPilotos,
-        datasets:[{
-          label:'Összpontszám',
-          data: barPontok,
-          backgroundColor: barColors
-        }]
-      },
-      options:{
-        plugins:{legend:{display:false}},
-        scales:{
-          y:{title:{display:true, text:'Pontszám'}}
+      new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+          labels: barPilotos,
+          datasets: [{ label:'Összpontszám', data: barPontok, backgroundColor: barColors }]
+        },
+        options: {
+          plugins: { legend: { display:false } },
+          scales: { y: { title:{display:true, text:'Pontszám'} } }
         }
-      }
-    });
+      });
 
-  </script>
+    })
+    .catch(err => console.error("CSV betöltési hiba:", err));
+</script>
+
 </body>
 </html>
