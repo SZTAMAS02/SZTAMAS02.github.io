@@ -27,8 +27,14 @@
 
   <!-- BAR CHART: ÖSSZPONTOK -->
   <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">Szezon végi összpontszámok</h2>
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Szezon végi összpontszámok - Pilóták</h2>
     <canvas id="barChart" height="120"></canvas>
+  </div>
+
+  <!-- BAR CHART: KONSTRUKTŐRÖK -->
+  <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Szezon végi összpontszámok - Konstruktőrök</h2>
+    <canvas id="constructorChart" height="100"></canvas>
   </div>
 
   <!-- TÉRKÉP: Versenyhelyszínek -->
@@ -49,7 +55,7 @@ const teamColors = {
   "Mercedes": "#00D2BE",
   "Williams": "#005AFF",
   "Aston Martin": "#006F62",
-  "Kick Sauber": "#FFD700",
+  "Kick Sauber": "#00FF00",
   "Racing Bulls": "#6699FF",
   "Haas F1 Team": "#B6BABD",
   "Haas": "#B6BABD",
@@ -160,6 +166,38 @@ async function loadData() {
           label: 'Összpont',
           data: sortedDrivers.map(d => totalPoints[d]),
           backgroundColor: sortedDrivers.map(d => teamColors[driverTeams[d]])
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: true }
+        },
+        scales: { y: { beginAtZero: true, title: { display: true, text: 'Pont' } } }
+      }
+    });
+    
+    // --- KONSTRUKTŐR DIAGRAM ---
+    const constructorPoints = {};
+    allDrivers.forEach(driver => {
+      const team = driverTeams[driver];
+      if (!constructorPoints[team]) {
+        constructorPoints[team] = 0;
+      }
+      constructorPoints[team] += totalPoints[driver];
+    });
+    
+    const sortedTeams = Object.keys(constructorPoints).sort((a, b) => constructorPoints[b] - constructorPoints[a]);
+    
+    new Chart(document.getElementById('constructorChart'), {
+      type: 'bar',
+      data: {
+        labels: sortedTeams,
+        datasets: [{
+          label: 'Konstruktőr pontok',
+          data: sortedTeams.map(team => constructorPoints[team]),
+          backgroundColor: sortedTeams.map(team => teamColors[team])
         }]
       },
       options: {
