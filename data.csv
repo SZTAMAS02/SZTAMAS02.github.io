@@ -1,13 +1,22 @@
-Race,Driver,Team,Points,Rank,LapTimeAvg
-Australia,Verstappen,Red Bull,25,1,81.2
-Australia,Hamilton,Ferrari,18,2,81.5
-Australia,Norris,McLaren,15,3,81.4
-China,Verstappen,Red Bull,26,1,96.5
-China,Leclerc,Ferrari,18,2,96.9
-China,Norris,McLaren,15,3,97.1
-Hungary,Hamilton,Ferrari,25,1,78.2
-Hungary,Verstappen,Red Bull,18,2,78.4
-Hungary,Piastri,McLaren,15,3,78.6
-AbuDhabi,Verstappen,Red Bull,25,1,99.2
-AbuDhabi,Norris,McLaren,18,2,99.5
-AbuDhabi,Leclerc,Ferrari,15,3,99.8
+Race,Driver,Team,Points,Position,LapTimeAvg
+Bahrain,Verstappen,Red Bull,25,1,91.2
+Bahrain,Perez,Red Bull,18,2,91.5
+Bahrain,Alonso,Aston Martin,15,3,91.8
+Saudi Arabia,Verstappen,Red Bull,25,1,88.9
+Saudi Arabia,Perez,Red Bull,18,2,89.1
+Saudi Arabia,Alonso,Aston Martin,15,3,89.4
+Australia,Verstappen,Red Bull,25,1,80.4
+Australia,Hamilton,Mercedes,18,2,80.7
+Australia,Alonso,Aston Martin,15,3,80.9
+Monaco,Verstappen,Red Bull,25,1,74.3
+Monaco,Alonso,Aston Martin,18,2,74.6
+Monaco,Ocon,Alpine,15,3,74.9
+Silverstone,Verstappen,Red Bull,25,1,87.5
+Silverstone,Norris,McLaren,18,2,87.8
+Silverstone,Hamilton,Mercedes,15,3,88.0
+Hungary,Verstappen,Red Bull,25,1,77.9
+Hungary,Norris,McLaren,18,2,78.2
+Hungary,Piastri,McLaren,15,3,78.5
+Abu Dhabi,Verstappen,Red Bull,25,1,98.6
+Abu Dhabi,Leclerc,Ferrari,18,2,98.9
+Abu Dhabi,Russell,Mercedes,15,3,99.1
