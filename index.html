@@ -52,7 +52,7 @@ const teamColors = {
   "Alpine": "#0090FF"
 };
 
-// --- TOP 3 PILÓTA PONT TREND ---
+// --- TOP 3 PILÓTA PONT TREND (KUMULATÍV) ---
 const drivers = ["Lando Norris","Max Verstappen","Oscar Piastri"];
 const driverTeams = {
   "Lando Norris":"McLaren",
@@ -69,13 +69,26 @@ const points = {
   "Max Verstappen":[18,15,6,25,10,18,5,25,25,18,10,18,9,18,8,25,9,18,25,25,15,8,18,15,5,25,25,4,25,25],
   "Oscar Piastri":[15,25,7,15,25,25,6,25,15,15,25,15,18,25,7,25,18,25,15,18,12,7,25,5,6,18,15,2,15,25]
 };
+
+// Kumulatív pontszámok számítása
+const cumulativePoints = {};
+drivers.forEach(driver => {
+  cumulativePoints[driver] = [];
+  let sum = 0;
+  points[driver].forEach(point => {
+    sum += point;
+    cumulativePoints[driver].push(sum);
+  });
+});
+
 const datasets = drivers.map(driver=>({
   label: driver,
-  data: points[driver],
+  data: cumulativePoints[driver],
   borderColor: teamColors[driverTeams[driver]],
   backgroundColor: teamColors[driverTeams[driver]]+"55",
   fill:true,
-  tension:0.3
+  tension:0.3,
+  borderWidth: 3
 }));
 new Chart(document.getElementById('pointsChart'),{
   type:'line',
@@ -87,7 +100,7 @@ new Chart(document.getElementById('pointsChart'),{
       legend:{position:'top',labels:{font:{size:16}}}
     },
     interaction:{mode:'nearest',axis:'x',intersect:false},
-    scales:{y:{title:{display:true,text:'Pontok'},beginAtZero:true}}
+    scales:{y:{title:{display:true,text:'Kumulatív pontok'},beginAtZero:true,max:450}}
   }
 });
 
@@ -99,7 +112,28 @@ const allDrivers = [
   "Gabriel Bortoleto","Isack Hadjar","Liam Lawson","Yuki Tsunoda"
 ];
 
-// Egyszerű példa összpontszám (összes verseny pontja összeadva, csak demo, pontos CSV alapján töltsd)
+const allDriverTeams = {
+  "Lando Norris":"McLaren",
+  "Max Verstappen":"Red Bull Racing",
+  "Oscar Piastri":"McLaren",
+  "Charles Leclerc":"Ferrari",
+  "Lewis Hamilton":"Ferrari",
+  "George Russell":"Mercedes",
+  "Kimi Antonelli":"Mercedes",
+  "Fernando Alonso":"Aston Martin",
+  "Lance Stroll":"Aston Martin",
+  "Pierre Gasly":"Alpine",
+  "Esteban Ocon":"Haas F1 Team",
+  "Oliver Bearman":"Haas F1 Team",
+  "Alexander Albon":"Williams",
+  "Carlos Sainz":"Williams",
+  "Nico Hulkenberg":"Kick Sauber",
+  "Gabriel Bortoleto":"Kick Sauber",
+  "Isack Hadjar":"Racing Bulls",
+  "Liam Lawson":"Racing Bulls",
+  "Yuki Tsunoda":"Racing Bulls"
+};
+
 const totalPoints = {
   "Lando Norris":423,
   "Max Verstappen":421,
@@ -121,14 +155,18 @@ const totalPoints = {
   "Liam Lawson":38,
   "Yuki Tsunoda":33
 };
+
+// Rendezés csökkenő sorrendbe
+const sortedDrivers = allDrivers.sort((a, b) => totalPoints[b] - totalPoints[a]);
+
 new Chart(document.getElementById('barChart'),{
   type:'bar',
   data:{
-    labels:allDrivers,
+    labels:sortedDrivers,
     datasets:[{
       label:'Összpont',
-      data:allDrivers.map(d=>totalPoints[d]),
-      backgroundColor:allDrivers.map(d=>teamColors[d.includes("Max")||d.includes("Verstappen")?"Red Bull Racing":driverTeams[d]||"McLaren"])
+      data:sortedDrivers.map(d=>totalPoints[d]),
+      backgroundColor:sortedDrivers.map(d=>teamColors[allDriverTeams[d]])
     }]
   },
   options:{
@@ -151,7 +189,6 @@ const mapData = {
     {type:'Feature',properties:{race:'Bahrain',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[50.55,26.03]}},
     {type:'Feature',properties:{race:'Saudi Arabia',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[39.57,21.61]}},
     {type:'Feature',properties:{race:'Miami',winner:'Oscar Piastri'},geometry:{type:'Point',coordinates:[-80.19,25.76]}}
-    // ide lehet további pályák koordinátáit felvenni
   ]
 };
 const ctx = document.getElementById('mapChart').getContext('2d');
