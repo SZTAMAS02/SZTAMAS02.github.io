@@ -275,14 +275,14 @@ async function loadData() {
     const datasets = top3Drivers.map(driver => ({
       label: driver,
       data: cumulativePoints[driver],
-      borderColor: teamColors[driverTeams[driver]],
-      backgroundColor: teamColors[driverTeams[driver]] + "33",
+      borderColor: driver === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[driver]],
+      backgroundColor: (driver === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[driver]]) + "33",
       fill: true,
       tension: 0.4,
       borderWidth: 4,
       pointRadius: 4,
       pointHoverRadius: 8,
-      pointBackgroundColor: teamColors[driverTeams[driver]],
+      pointBackgroundColor: driver === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[driver]],
       pointBorderColor: '#fff',
       pointBorderWidth: 2
     }));
@@ -337,11 +337,11 @@ async function loadData() {
         datasets: [{
           label: 'Összpont',
           data: sortedDrivers.map(d => totalPoints[d]),
-          backgroundColor: sortedDrivers.map(d => teamColors[driverTeams[d]] + 'CC'),
-          borderColor: sortedDrivers.map(d => teamColors[driverTeams[d]]),
+          backgroundColor: sortedDrivers.map(d => (d === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[d]]) + 'CC'),
+          borderColor: sortedDrivers.map(d => d === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[d]]),
           borderWidth: 2,
           borderRadius: 8,
-          hoverBackgroundColor: sortedDrivers.map(d => teamColors[driverTeams[d]])
+          hoverBackgroundColor: sortedDrivers.map(d => d === "Yuki Tsunoda" ? teamColors["Red Bull Racing"] : teamColors[driverTeams[d]])
         }]
       },
       options: {
